@@ -14,7 +14,6 @@ namespace Projectile
     {
         public const int FPS = 60;
         public const float REFRESH_RATE = 1f / FPS;
-
         public RenderWindow Window 
         {
             get;
@@ -36,7 +35,7 @@ namespace Projectile
         protected Loop (uint width, uint height, string title, Color color)
         {
             this.WindowClearColor = color;
-            this.Window = new RenderWindow(new VideoMode(width, height), title);
+            this.Window = new RenderWindow(new VideoMode(width, height), title, Styles.Titlebar|Styles.Close);
             this.Frames = new Frames();
             Window.Closed += WindowClosed;
         }

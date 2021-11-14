@@ -12,7 +12,7 @@ namespace Projectile
 {
     public static class DisplayInfo
     {
-        public const string FONT_PATH = "./fonts/arial.ttf";
+        public const string FONT_PATH = "../../fonts/consolab.ttf";
         public static Font infoFont;
 
         public static void LoadFont()
@@ -20,15 +20,7 @@ namespace Projectile
             infoFont = new Font(FONT_PATH);
         }
 
-       /* public static string filename = "sound.wav";
-
-        public static void PlaySound()
-        {
-            var buffer = new SoundBuffer(filename);
-
-            var sound = new Sound(buffer);
-            sound.Play();
-        } */
+        
 
         public static void DrawInfo(Loop loop, Color fontColor)
         {
