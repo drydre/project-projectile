@@ -12,12 +12,11 @@ namespace Projectile
 {
     public static class DisplayInfo
     {
-        public const string FONT_PATH = "../../fonts/consolab.ttf";
         public static Font infoFont;
 
         public static void LoadFont()
         {
-            infoFont = new Font(FONT_PATH);
+            infoFont = new Font(C.FONT_PATH);
         }
 
         

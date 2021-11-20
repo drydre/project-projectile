@@ -12,12 +12,9 @@ namespace Projectile
 {
     public class Projectile : Loop
     {
-        public const uint DEFAULT_WIDTH = 1280;
-        public const uint DEFAULT_HEIGHT = 720;
-        public const string DEFAULT_TITLE  = "Project: Projectile";
         public static Color Bgcolor = new Color(187, 247, 143, 255);
         public static Color MainFontColor = new Color(112, 73, 0, 255);
-        public Projectile() : base(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_TITLE, Bgcolor) { }
+        public Projectile() : base(C.DEFAULT_WIDTH, C.DEFAULT_HEIGHT, C.DEFAULT_TITLE, Bgcolor) { }
 
         public override void Load() 
         {

@@ -12,6 +12,8 @@ namespace Projectile
 {
     public abstract class Loop
     {
+        public bool in_game = false;
+        public int level = 0;
         public const int FPS = 60;
         public const float REFRESH_RATE = 1f / FPS;
         public RenderWindow Window 
@@ -38,6 +40,8 @@ namespace Projectile
             this.Window = new RenderWindow(new VideoMode(width, height), title, Styles.Titlebar|Styles.Close);
             this.Frames = new Frames();
             Window.Closed += WindowClosed;
+            //Window.MouseButtonPressed += MousePressed;
+            Window.MouseButtonReleased += MouseReleased;
         }
 
         private void WindowClosed(object sender, EventArgs e)
@@ -45,16 +49,26 @@ namespace Projectile
             Window.Close();
         }
 
+        private void MouseReleased(object sender, EventArgs e)
+        {
+            if (level == 0)
+                DisplayMenu.CheckClick(ref level, this);
+            
+            {
+                //UZUPEŁNIĆ!!!
+            }
+                
+        }
+
         public void Run()
         {
             Load();
             Initialize();
 
-            float untilRefresh = 0f;
+            float sinceRefresh = 0f;
             float previousTime = 0f;
             float delta = 0f;
             float totalTime = 0f;
-
             Clock clock = new Clock();
 
             while(Window.IsOpen)
@@ -64,12 +78,12 @@ namespace Projectile
                 delta = totalTime - previousTime;
                 previousTime = totalTime;
 
-                untilRefresh += delta;
+                sinceRefresh += delta;
 
-                if(untilRefresh >= REFRESH_RATE)
+                if(sinceRefresh >= REFRESH_RATE)
                 {
-                    Frames.SetValue(untilRefresh, clock.ElapsedTime.AsSeconds());
-                    untilRefresh = 0f;
+                    Frames.SetValue(sinceRefresh, clock.ElapsedTime.AsSeconds());
+                    sinceRefresh = 0f;
                     SetValue(Frames);
 
                     Window.Clear(WindowClearColor);
