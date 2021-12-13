@@ -13,9 +13,11 @@ namespace Projectile
     public abstract class Loop
     {
         public bool in_game = false;
-        public int level = 0;
+        public uint displaying = 0;
         public const int FPS = 60;
         public const float REFRESH_RATE = 1f / FPS;
+        private protected Level level;
+
         public RenderWindow Window 
         {
             get;
@@ -40,8 +42,15 @@ namespace Projectile
             this.Window = new RenderWindow(new VideoMode(width, height), title, Styles.Titlebar|Styles.Close);
             this.Frames = new Frames();
             Window.Closed += WindowClosed;
-            //Window.MouseButtonPressed += MousePressed;
+            Window.MouseButtonPressed += MousePressed;
             Window.MouseButtonReleased += MouseReleased;
+            Window.MouseMoved += MouseMoved;
+        }
+
+        private void LoadLevel(uint levelNumber)
+        {
+            Level level = new Level(levelNumber);
+            this.level = level;
         }
 
         private void WindowClosed(object sender, EventArgs e)
@@ -51,13 +60,32 @@ namespace Projectile
 
         private void MouseReleased(object sender, EventArgs e)
         {
-            if (level == 0)
-                DisplayMenu.CheckClick(ref level, this);
-            
+            if (displaying == 0)
             {
-                //UZUPEŁNIĆ!!!
+                DisplayMenu.CheckClick(ref displaying, this);
+                if (displaying != 0)
+                    this.LoadLevel(displaying);
             }
-                
+            else
+            {
+                level.CheckClickUp(ref displaying, this);
+            }     
+        }
+
+        private void MousePressed(object sender, EventArgs e)
+        {
+            if (displaying != 0)
+            {
+                level.CheckClickDown(this);
+            }
+        }
+
+        private void MouseMoved(object sender, EventArgs e)
+        {
+            if (displaying != 0)
+            {
+                level.CheckMove(this);
+            }
         }
 
         public void Run()

@@ -12,7 +12,7 @@ namespace Projectile
 
         public static void SaveProgress(Int16 level, string name)
         {
-
+            //metoda zapisu do pliku binarnego
             using (BinaryWriter progress = new BinaryWriter(File.Open(name, FileMode.OpenOrCreate)))
             {
                 progress.BaseStream.Position = progress.BaseStream.Length;
@@ -22,6 +22,7 @@ namespace Projectile
 
         public static void ResetProgress(ref List<Miniature> miniatures, string name)
         {
+            //metoda resetowania pliku binarnego
             foreach(Miniature min in miniatures)
             {
                 if (min.IsRect())
@@ -32,10 +33,11 @@ namespace Projectile
 
         public static void LoadProgress(ref List<Miniature> miniatures, string name)
         {
+            //metoda wczytywania postępu po włączeniu rozgrywki
             if (File.Exists(name))
             {
                 using (BinaryReader progress = new BinaryReader(File.Open(name, FileMode.Open)))
-                {
+                {   // z pliku binarnego ukończone poziomy wczytywane są do listy
                     List<Int16> completedLevels = new List<Int16>();
                     int i = 0;
                     progress.BaseStream.Position = 0;

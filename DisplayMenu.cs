@@ -21,7 +21,6 @@ namespace Projectile
         public static Color RstClr = new Color(123, 224, 76, 255);
         public static Color ActiveRstClr = new Color(227, 230, 57, 255);
         public static List<Miniature> miniatures = new List<Miniature>();
-        public static Font mainFont;
         public static Miniature minMars;
         public static Miniature minEarth;
         public static Miniature minKepler;
@@ -42,18 +41,13 @@ namespace Projectile
 
         }
 
-        public static void LoadFont()
-        {
-            mainFont = new Font(C.MAINFONT_PATH);
-        }
-
         public static void LoadMiniature()
         {
             minEarth = new Miniature("Earth", C.MIN_EARTH_PATH, DefBrdClr, Color.Black, C.LEFT_MARGIN, C.TOP_MARGIN);
             minMars = new Miniature("Mars", C.MIN_MARS_PATH, DefBrdClr, Color.Black, C.LEFT_MARGIN + C.MIN_X + C.H_SPACING, C.TOP_MARGIN);
             minMoon = new Miniature("Moon", C.MIN_MOON_PATH, DefBrdClr, Color.White, C.LEFT_MARGIN, C.TOP_MARGIN + C.V_SPACING + C.MIN_Y);
             minKepler = new Miniature("Kepler 22b", C.MIN_KEPLER_PATH, DefBrdClr, Color.White, C.LEFT_MARGIN + C.MIN_X + C.H_SPACING, C.TOP_MARGIN + C.V_SPACING + C.MIN_Y);
-            rstBtn = new Miniature("    RESET\nPROGRESS", C.RST_X_RAD, C.RST_Y_RAD, C.DEFAULT_WIDTH - C.RIGHT_RESET_MARGIN, C.TOP_RESET_MARGIN, DefBrdClr, RstClr);
+            rstBtn = new Miniature("    RESET\nPROGRESS", C.DEFAULT_WIDTH - C.RIGHT_RESET_MARGIN, C.TOP_RESET_MARGIN, DefBrdClr, RstClr);
             miniatures.Add(minEarth);
             miniatures.Add(minMars);
             miniatures.Add(minMoon);
@@ -61,7 +55,7 @@ namespace Projectile
             miniatures.Add(rstBtn);
         }
 
-        public static void CheckClick(ref int level, Loop loop)
+        public static void CheckClick(ref uint displaying, Loop loop)
         {
             Area area = MouseEventsMenu.CheckArea(loop);
             if (area != Area.none)
@@ -72,16 +66,16 @@ namespace Projectile
             switch(area)
             {
                 case Area.earth:
-                    level = 1;
-                break;
+                    displaying = 1;
+                    break;
                 case Area.mars:
-                    level = 2;
+                    displaying = 2;
                 break;
                 case Area.moon:
-                    level = 3;
+                    displaying = 3;
                     break;
                 case Area.kepler:
-                    level = 4;
+                    displaying = 4;
                     break;
                 case Area.reset:
                     Progress.ResetProgress ( ref miniatures, "progress");
@@ -93,7 +87,7 @@ namespace Projectile
 
         public static void DrawMenu(Loop loop, Color fontColor)
         {
-            Text txtTitle = new Text("Project: Projectile", mainFont, C.MAIN_TEXT_SIZE);
+            Text txtTitle = new Text("Project: Projectile", Projectile.mainFont, C.MAIN_TEXT_SIZE);
             txtTitle.Position = new Vector2f(480f, 20f);
             txtTitle.Color = fontColor;
             loop.Window.Draw(txtTitle);
@@ -139,8 +133,8 @@ namespace Projectile
                     }
                     else
                     {
-                        min.ChangeEllipseColor(Color.White);
-                        min.ellipse.FillColor = ActiveRstClr;
+                        min.ellipse.ChangeEllipseColor(Color.White);
+                        min.ellipse.ChangeFillColor(ActiveRstClr);
                     }
                 }
                 else if(min.IsRect())
@@ -153,10 +147,10 @@ namespace Projectile
                 }
                 else if(!min.IsRect())
                 {
-                    if (min.active == false && min.ellipse.OutlineColor == Color.White)
+                    if (min.active == false && min.ellipse.GetOutlineColor() == Color.White)
                     {
-                        min.ChangeEllipseColor(DefBrdClr);
-                        min.ellipse.FillColor = RstClr;
+                        min.ellipse.ChangeEllipseColor(DefBrdClr);
+                        min.ellipse.ChangeFillColor(RstClr);
                     }
                 }
                 min.Draw(loop);

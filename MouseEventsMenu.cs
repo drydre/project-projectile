@@ -11,10 +11,8 @@ using SFML.Window;
 
 namespace Projectile
 {
-    class MouseEventsMenu 
+    static class MouseEventsMenu 
     {
-
-        public MouseEventsMenu() { }
 
         public static DisplayMenu.Area CheckArea(Loop loop)
         {
