@@ -10,17 +10,21 @@ namespace Projectile
     class Progress
     {
 
-        public static void SaveProgress(Int16 level, string name)
+        public static void SaveProgress(Int16 level)
         {
             //metoda zapisu do pliku binarnego
-            using (BinaryWriter progress = new BinaryWriter(File.Open(name, FileMode.OpenOrCreate)))
+            using (BinaryWriter progress = new BinaryWriter(File.Open(C.SAVE_PATH, FileMode.OpenOrCreate)))
             {
-                progress.BaseStream.Position = progress.BaseStream.Length;
-                progress.Write(level);
+                if (DisplayMenu.miniatures[level - 1].completed == false) 
+                {
+                    progress.BaseStream.Position = progress.BaseStream.Length;
+                    progress.Write(level);
+                }
             }
+            LoadProgress();
         }
 
-        public static void ResetProgress(ref List<Miniature> miniatures, string name)
+        public static void ResetProgress(ref List<Miniature> miniatures)
         {
             //metoda resetowania pliku binarnego
             foreach(Miniature min in miniatures)
@@ -28,26 +32,23 @@ namespace Projectile
                 if (min.IsRect())
                     min.completed = false;
             }
-            BinaryWriter progress = new BinaryWriter(File.Open(name, FileMode.Create));
+            BinaryWriter progress = new BinaryWriter(File.Open(C.SAVE_PATH, FileMode.Create));
         }
 
-        public static void LoadProgress(ref List<Miniature> miniatures, string name)
+        public static void LoadProgress()
         {
             //metoda wczytywania postępu po włączeniu rozgrywki
-            if (File.Exists(name))
+            if (File.Exists(C.SAVE_PATH))
             {
-                using (BinaryReader progress = new BinaryReader(File.Open(name, FileMode.Open)))
+                using (BinaryReader progress = new BinaryReader(File.Open(C.SAVE_PATH, FileMode.Open)))
                 {   // z pliku binarnego ukończone poziomy wczytywane są do listy
-                    List<Int16> completedLevels = new List<Int16>();
-                    int i = 0;
                     progress.BaseStream.Position = 0;
                     while (progress.BaseStream.Position != progress.BaseStream.Length)
                     {
-                        completedLevels.Add(progress.ReadInt16());
+                        DisplayMenu.miniatures[progress.ReadInt16() - 1].completed = true;
                     }
                 }
             }
-            
         }
     }
 }

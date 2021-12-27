@@ -16,9 +16,11 @@ namespace Projectile
         public static Color resultBrdClr = new Color(112, 73, 0, 127);
         public static Color resultFillClr = new Color(255, 255, 255, 127);
         public static Color theoryFillClr = new Color(255, 255, 255, 127);
+        public static Color theoryFillClrActive = new Color(255, 255, 255, 180);
         public static Color theoryBrdClr = new Color(255, 255, 255, 255);
         public static Color theoryBtnClr = new Color(112, 73, 0, 255);
         public static Color resultBtnClr = new Color(112, 73, 0, 255);
+        public static Color resultBtnClrActive = new Color(166, 108, 0, 255);
         public static Color marsFontClr = new Color(92, 8, 83, 255);
         public static Color earthFontClr = new Color(92, 8, 83, 255);
         public static Color moonFontClr = new Color(196, 196, 196, 255);

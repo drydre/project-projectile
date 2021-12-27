@@ -16,23 +16,31 @@ namespace Projectile
     {
         Texture texture;
         Text text;
+        Text cpltText;
         public RectangleShape rectShp;
         public Ellipse ellipse;
         public Sprite sprite;
         public bool active = false;
         public bool completed = false;
+        public float x;
+        public float y;
 
         public Miniature(string ellipsetext, float x, float y, Color brdcolor, Color fillcolor, float thickness = C.DEF_BRD_THICKNESS)
         {
+           
             ellipse = new Ellipse(C.RST_X_RAD, C.RST_Y_RAD, x, y, brdcolor, fillcolor, Projectile.mainFont, C.RST_TEXT_SIZE, ellipsetext, DisplayMenu.DefTxtClr, thickness = C.DEF_BRD_THICKNESS);
         }
 
         public Miniature(string name, string path, Color brdcolor, Color textcolor, float x, float y, float thickness = C.DEF_BRD_THICKNESS)
         {
+            this.x = x;
+            this.y = y;
             this.LoadTexture(texture, path);
             this.LoadBorder(rectShp, thickness, brdcolor, x, y);
             this.LoadSprite(sprite, texture, x, y);
-            this.LoadText(Projectile.mainFont, x, y, C.NAME_TEXT_SIZE, name, textcolor, texture);
+            this.LoadText(C.NAME_TEXT_SIZE, name, textcolor, texture);
+            if (IsRect())
+                this.LoadCpltText();
         }
 
         private void LoadTexture(Texture texture, string path)
@@ -60,13 +68,22 @@ namespace Projectile
             };
         }
 
-        private void LoadText(Font font, float x, float y, uint textsize, string name, Color textcolor, Texture texture)
+        private void LoadText(uint textsize, string name, Color textcolor, Texture texture)
         {
             this.text = new Text(name, Projectile.mainFont, textsize);
             FloatRect textRect = text.GetLocalBounds();
             text.Origin = new Vector2f(textRect.Left + textRect.Width/2, textRect.Top + textRect.Height/2);
             text.Position = new Vector2f(x+ texture.Size.X / 2, y+25f);
             text.Color = textcolor;
+        }
+
+        private void LoadCpltText()
+        {
+            this.cpltText = new Text("COMPLETED", Projectile.mainFont, C.CPLT_TEXT_SIZE);
+            FloatRect textRect = cpltText.GetLocalBounds();
+            cpltText.Origin = new Vector2f(textRect.Left + textRect.Width / 2, textRect.Top + textRect.Height / 2);
+            cpltText.Position = new Vector2f(x + texture.Size.X / 2, y + texture.Size.Y / 2);
+            cpltText.Color = DisplayMenu.CpltBrdClr;
         }
 
         public void ChangeColor(Color color)
@@ -88,6 +105,8 @@ namespace Projectile
             {
                 loop.Window.Draw(this.sprite);
                 loop.Window.Draw(this.rectShp);
+                if (this.completed)
+                    loop.Window.Draw(this.cpltText);
             }
             else
                 ellipse.DrawEllipse(loop);

@@ -78,7 +78,7 @@ namespace Projectile
                     displaying = 4;
                     break;
                 case Area.reset:
-                    Progress.ResetProgress ( ref miniatures, "progress");
+                    Progress.ResetProgress ( ref miniatures);
                 break;
                 case Area.none:
                     break;
@@ -139,9 +139,12 @@ namespace Projectile
                 }
                 else if(min.IsRect())
                 {
-                    if (min.active == false && min.rectShp.OutlineColor == Color.White)
+                    if (min.active == false && (min.rectShp.OutlineColor == Color.White || min.rectShp.OutlineColor == CpltBrdClr))
                     {
-                        min.ChangeColor(DefBrdClr);
+                        if (min.completed == false)
+                            min.ChangeColor(DefBrdClr);
+                        else
+                            min.ChangeColor(CpltBrdClr);
                         min.rectShp.FillColor = Color.Transparent;
                     }
                 }

@@ -13,6 +13,7 @@ namespace Projectile
     public class Projectile : Loop
     {
         public static Font mainFont;
+        public static Font theoryFont;
         public static Color Bgcolor = new Color(187, 247, 143, 255);
         public static Color MainFontColor = new Color(112, 73, 0, 255);
 
@@ -20,6 +21,7 @@ namespace Projectile
         public static void LoadFont()
         {
             mainFont = new Font(C.MAINFONT_PATH);
+            theoryFont = new Font(C.THEORY_FONT_PATH);
         }
 
         public override void Load() 
@@ -27,6 +29,7 @@ namespace Projectile
             DisplayInfo.LoadFont();
             LoadFont();
             DisplayMenu.LoadMiniature();
+            Progress.LoadProgress();
             
         }
         public override void Initialize() { }
@@ -37,13 +40,13 @@ namespace Projectile
         }
         public override void Draw(Frames frames) 
         {
-            DisplayInfo.DrawInfo(this, Color.Red);
             if (displaying == 0)
             {
                 DisplayMenu.DrawMenu(this, MainFontColor);
             }     
             else
                 level.Draw(this);
+            DisplayInfo.DrawInfo(this, Color.Red);
         }
     }
 }

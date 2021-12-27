@@ -16,7 +16,7 @@ namespace Projectile
 
         public static void LoadFont()
         {
-            infoFont = new Font(C.FONT_PATH);
+            infoFont = new Font(C.INFO_FONT_PATH);
         }
 
         

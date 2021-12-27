@@ -107,9 +107,9 @@ namespace Projectile
                 previousTime = totalTime;
 
                 sinceRefresh += delta;
-
-                if(sinceRefresh >= REFRESH_RATE)
-                {
+                //maksymalna możliwa ilość klatek zamiast 60 fps
+                //if(sinceRefresh >= REFRESH_RATE)
+                //{
                     Frames.SetValue(sinceRefresh, clock.ElapsedTime.AsSeconds());
                     sinceRefresh = 0f;
                     SetValue(Frames);
@@ -117,7 +117,7 @@ namespace Projectile
                     Window.Clear(WindowClearColor);
                     Draw(Frames);
                     Window.Display();
-                }
+                //}
             }
         }
 
