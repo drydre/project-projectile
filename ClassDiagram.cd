@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Projectile.DisplayInfo">
+    <Position X="15" Y="14.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAg=</HashCode>
+      <FileName>DisplayInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.DisplayLevel">
+    <Position X="14.75" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAACAQAAAABAAAAIChABAAAAgUAAAIAAQAAEAgA=</HashCode>
+      <FileName>DisplayLevel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.DisplayMenu">
+    <Position X="6" Y="2.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Projectile.DisplayMenu.Area">
+        <TypeIdentifier>
+          <NewMemberFileName>DisplayMenu.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <AssociationLine Name="minMars" Type="Projectile.Miniature" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="6.25" Y="8.598" />
+        <Point X="6.25" Y="10" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="-1.807" Y="0.866" Height="0.182" Width="0.786" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="minEarth" Type="Projectile.Miniature" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="8.598" />
+        <Point X="7" Y="9.299" />
+        <Point X="7" Y="9.299" />
+        <Point X="7" Y="10" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.041" Y="1.109" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="minKepler" Type="Projectile.Miniature" FixedFromPoint="true">
+      <Path>
+        <Point X="6.75" Y="8.598" />
+        <Point X="6.75" Y="10" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.38" Y="0.384" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="minMoon" Type="Projectile.Miniature" FixedFromPoint="true">
+      <Path>
+        <Point X="6.5" Y="8.598" />
+        <Point X="6.5" Y="10" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.598" Y="0.615" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AACgAAACQAAAIAAAAAEEIIAAAABEAAAAAAQCAEIAAAI=</HashCode>
+      <FileName>DisplayMenu.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="minMars" />
+      <Field Name="minEarth" />
+      <Field Name="minKepler" />
+      <Field Name="minMoon" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Projectile.Ellipse">
+    <Position X="14.75" Y="10.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAQAAAAAAAAAIAAAAAgQAAAAAAAAAIAAAAAIAAAIA=</HashCode>
+      <FileName>Ellipse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.Frames">
+    <Position X="3.5" Y="9.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAAAgAAAAAAAggAAAAAAAAABAAAAAAEABAAAAAAAAAA=</HashCode>
+      <FileName>Frames.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.Level">
+    <Position X="11.75" Y="0.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Projectile.Level.Area">
+        <TypeIdentifier>
+          <NewMemberFileName>Level.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Projectile.Level.Action">
+        <TypeIdentifier>
+          <NewMemberFileName>Level.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ATIABEhACASQIggAAIIAJCAoIABmGABYSQAGDEAgIAE=</HashCode>
+      <FileName>Level.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ellipse" />
+      <Field Name="stage" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Projectile.Loop">
+    <Position X="3.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAIAAAAAwAAAAAAABAUAAEAAAAAIAAECAEgAEM=</HashCode>
+      <FileName>Loop.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="level" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Projectile.Miniature">
+    <Position X="6" Y="10" Width="2.25" />
+    <AssociationLine Name="ellipse" Type="Projectile.Ellipse" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.188" Y="14.632" />
+        <Point X="7.188" Y="14.726" />
+        <Point X="15.75" Y="14.726" />
+        <Point X="15.75" Y="13.401" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAIEAAAACgCAQgAACACAAAAEABAAQgAIAABgIAAAAAA=</HashCode>
+      <FileName>Miniature.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="ellipse" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Projectile.MouseEventsGame">
+    <Position X="14.75" Y="8.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MouseEventsGame.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.MouseEventsMenu">
+    <Position X="6" Y="14.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MouseEventsMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.Physics">
+    <Position X="14.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAEAAAAAAAAAAAAAAAAAAYBiASEgBAAAA=</HashCode>
+      <FileName>Physics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.Program">
+    <Position X="3.5" Y="12.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.Progress">
+    <Position X="6" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAgAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Progress.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.Projectile">
+    <Position X="3.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAgAAAABAAA0AAAAAAAAAAAAAAAAAAAQAAAAAAAAg=</HashCode>
+      <FileName>Projectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile.Stage">
+    <Position X="8.75" Y="0.5" Width="2" />
+    <Members>
+      <Field Name="clockRun" Hidden="true" />
+      <Field Name="length" Hidden="true" />
+      <Field Name="startPos" Hidden="true" />
+      <Field Name="str_prev" Hidden="true" />
+      <Field Name="success" Hidden="true" />
+      <Field Name="t_prev" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>JIMDDQ2CDEFEQgScgMACIFFBBQgQBBMIARUWICB6oQI=</HashCode>
+      <FileName>Stage.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="physics" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Projectile.C">
+    <Position X="17.5" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>YAYavcioFOiQmBJBmeQEgRIRdBxJJgKpQEZkCJVJriQ=</HashCode>
+      <FileName>C.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
