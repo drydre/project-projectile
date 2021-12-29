@@ -1,0 +1,58 @@
+\hypertarget{_projectile_8cs_source}{}\doxysection{Projectile.\+cs}
+\label{_projectile_8cs_source}\index{C:/Users/Piotr/Desktop/Studia/Semestr\_5/JPWP/Projectile/Projectile.cs@{C:/Users/Piotr/Desktop/Studia/Semestr\_5/JPWP/Projectile/Projectile.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00001}00001 \textcolor{keyword}{using} System;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00002}00002 \textcolor{keyword}{using} System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00003}00003 \textcolor{keyword}{using} System.Linq;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00004}00004 \textcolor{keyword}{using} System.Text;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00005}00005 \textcolor{keyword}{using} System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00006}00006 \textcolor{keyword}{using} SFML.System;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00007}00007 \textcolor{keyword}{using} SFML.Audio;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00008}00008 \textcolor{keyword}{using} SFML.Graphics;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00009}00009 \textcolor{keyword}{using} SFML.Window;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00011}00011 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_projectile}{Projectile}}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00013}\mbox{\hyperlink{class_projectile_1_1_projectile}{00013}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{namespace_projectile}{Projectile}} : \mbox{\hyperlink{class_projectile_1_1_loop}{Loop}}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00014}00014     \{   \textcolor{comment}{// klasa dziedzicząca po Loop}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00015}00015         \textcolor{keyword}{public} \textcolor{keyword}{static} Font mainFont;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00016}00016         \textcolor{keyword}{public} \textcolor{keyword}{static} Font theoryFont;}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00017}00017         \textcolor{keyword}{public} \textcolor{keyword}{static} Color backgroundColor = \textcolor{keyword}{new} Color(187, 247, 143, 255);}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00018}00018         \textcolor{keyword}{public} \textcolor{keyword}{static} Color MainFontColor = \textcolor{keyword}{new} Color(112, 73, 0, 255);}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00020}00020         \textcolor{comment}{// w konstruktorze ustalono rozdzielczość okna, tytuł oraz kolor po wyczyszczeniu}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00021}00021         \textcolor{keyword}{public} \mbox{\hyperlink{namespace_projectile}{Projectile}}() : base(C.DEFAULT\_WIDTH, C.DEFAULT\_HEIGHT, C.DEFAULT\_TITLE, backgroundColor) \{ \}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00022}00022         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} LoadFont()}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00023}00023         \{   \textcolor{comment}{// wczytanie czcionek używanych w programie}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00024}00024             mainFont = \textcolor{keyword}{new} Font(C.MAINFONT\_PATH);}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00025}00025             theoryFont = \textcolor{keyword}{new} Font(C.THEORY\_FONT\_PATH);}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00026}00026         \}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00028}00028         \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} Load() }
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00029}00029         \{   \textcolor{comment}{// dane wczytywane jednorazowo po uruchomieniu}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00030}00030             LoadFont();}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00031}00031             DisplayInfo.LoadFont();}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00032}00032             \mbox{\hyperlink{class_projectile_1_1_display_menu}{DisplayMenu}}.LoadMenu();}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00033}00033             \mbox{\hyperlink{class_projectile_1_1_progress}{Progress}}.LoadProgress();}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00034}00034         \}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00036}00036         \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} SetValue(\mbox{\hyperlink{class_projectile_1_1_frames}{Frames}} frames) }
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00037}00037         \{   \textcolor{comment}{// odświeżenie obliczeń w grze}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00038}00038             \textcolor{keywordflow}{if} (displaying != 0)}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00039}00039                 level.UpdateLevel(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00040}00040         \}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00041}00041         \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} Draw(\mbox{\hyperlink{class_projectile_1_1_frames}{Frames}} frames) }
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00042}00042         \{   \textcolor{comment}{// ustawienie elementów w oknie po odświeżeniu danych}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00043}00043             \textcolor{keywordflow}{if} (displaying == 0)}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00044}00044             \{   \textcolor{comment}{// dla menu}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00045}00045                 \mbox{\hyperlink{class_projectile_1_1_display_menu}{DisplayMenu}}.DrawMenu(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00046}00046             \}     }
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00047}00047             \textcolor{keywordflow}{else} \textcolor{comment}{// dla poziomu}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00048}00048                 level.Draw(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00049}00049             DisplayInfo.DrawInfo(\textcolor{keyword}{this}, Color.Red);}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00050}00050         \}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00051}00051     \}}
+\DoxyCodeLine{\Hypertarget{_projectile_8cs_source_l00052}00052 \}}
+
+\end{DoxyCode}

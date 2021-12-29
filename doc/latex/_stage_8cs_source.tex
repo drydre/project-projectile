@@ -1,0 +1,627 @@
+\hypertarget{_stage_8cs_source}{}\doxysection{Stage.\+cs}
+\label{_stage_8cs_source}\index{C:/Users/Piotr/Desktop/Studia/Semestr\_5/JPWP/Projectile/Stage.cs@{C:/Users/Piotr/Desktop/Studia/Semestr\_5/JPWP/Projectile/Stage.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00001}00001 \textcolor{keyword}{using} System;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00002}00002 \textcolor{keyword}{using} System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00003}00003 \textcolor{keyword}{using} System.Linq;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00004}00004 \textcolor{keyword}{using} System.Text;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00005}00005 \textcolor{keyword}{using} System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00006}00006 \textcolor{keyword}{using} SFML.System;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00007}00007 \textcolor{keyword}{using} SFML.Audio;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00008}00008 \textcolor{keyword}{using} SFML.Graphics;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00009}00009 \textcolor{keyword}{using} SFML.Window;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00011}00011 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_projectile}{Projectile}}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00013}\mbox{\hyperlink{class_projectile_1_1_stage}{00013}}     \textcolor{keyword}{class }\mbox{\hyperlink{class_projectile_1_1_stage}{Stage}}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00014}00014     \{   \textcolor{comment}{// klasa odpowiadająca za wygląd i charakterystykę etapu na danym poziomie}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00015}00015         \textcolor{keyword}{private} Clock clock;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00016}00016         \textcolor{keyword}{private} CircleShape projectileShape;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00017}00017         \textcolor{keyword}{private} Texture slingTexture;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00018}00018         \textcolor{keyword}{private} Sprite slingSprite;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00019}00019         \textcolor{keyword}{private} Texture targetTexture;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00020}00020         \textcolor{keyword}{private} Sprite targetSprite;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00021}00021         \textcolor{keyword}{private} RectangleShape slingshotPlatformShape;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00022}00022         \textcolor{keyword}{private} RectangleShape targetPlatformShape;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00023}00023         \textcolor{keyword}{private} RectangleShape stringLeftShape;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00024}00024         \textcolor{keyword}{private} RectangleShape stringRightShape;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00025}00025         \textcolor{keyword}{private} RectangleShape resultShape;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00026}00026         \textcolor{keyword}{private} RectangleShape resultRightBtnShape;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00027}00027         \textcolor{keyword}{private} RectangleShape resultLeftBtnShape;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00028}00028         \textcolor{keyword}{private} Text resultText;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00029}00029         \textcolor{keyword}{private} Text resultRightText;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00030}00030         \textcolor{keyword}{private} Text resultLeftText;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00031}00031         \textcolor{keyword}{private} Text constText;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00032}00032         \textcolor{keyword}{private} Text stageText;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00033}00033         \textcolor{keyword}{private} Text shotText;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00034}00034         \textcolor{keyword}{private} Text flightText;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00035}00035         \textcolor{keyword}{private} Color textColor;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00036}00036         \textcolor{keyword}{private} Color shotTextcolor;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00037}00037         \textcolor{keyword}{public} uint stageNumber;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00038}00038         \textcolor{keyword}{private} \textcolor{keywordtype}{int} slingshotPlatformHeight;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00039}00039         \textcolor{keyword}{private} \textcolor{keywordtype}{int} targetPlatformHeight;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00040}00040         \textcolor{keyword}{public} \textcolor{keywordtype}{int} updatedResult = 0;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00041}00041         \textcolor{keyword}{private} \textcolor{keywordtype}{float} t\_prev = -\/1;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00042}00042         \textcolor{keyword}{private} \textcolor{keywordtype}{float} slingshotX;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00043}00043         \textcolor{keyword}{private} \textcolor{keywordtype}{float} slingshotY;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00044}00044         \textcolor{keyword}{private} \textcolor{keywordtype}{float} targetX;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00045}00045         \textcolor{keyword}{private} \textcolor{keywordtype}{float} targetY;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00046}00046         \textcolor{keyword}{private} \textcolor{keywordtype}{float} baseAlt;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00047}00047         \textcolor{keyword}{private} \textcolor{keywordtype}{float} stringLimit;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00048}00048         \textcolor{keyword}{private} \textcolor{keywordtype}{float} length;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00049}00049         \textcolor{keyword}{private} \textcolor{keywordtype}{float} stretch;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00050}00050         \textcolor{keyword}{private} \textcolor{keywordtype}{float} str\_prev;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00051}00051         \textcolor{keyword}{private} \textcolor{keywordtype}{float} angle;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00052}00052         \textcolor{keyword}{private} \textcolor{keywordtype}{float} stringK;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00053}00053         \textcolor{keyword}{private} \textcolor{keywordtype}{float} mass;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00054}00054         \textcolor{keyword}{private} \textcolor{keywordtype}{float} g;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00055}00055         \textcolor{keyword}{public} \textcolor{keywordtype}{float} energy;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00056}00056         \textcolor{keyword}{public} \textcolor{keywordtype}{float} velocity;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00057}00057         \textcolor{keyword}{public} \textcolor{keywordtype}{float} maxEnergy;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00058}00058         \textcolor{keyword}{private} \textcolor{keywordtype}{string} mainResultString;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00059}00059         \textcolor{keyword}{private} \textcolor{keywordtype}{string} leftResultString;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00060}00060         \textcolor{keyword}{private} \textcolor{keywordtype}{string} rightResultString;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00061}00061         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} clockRun = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00062}00062         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} success = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00063}00063         \textcolor{keyword}{public} \mbox{\hyperlink{class_projectile_1_1_physics}{Physics}} physics = \textcolor{keyword}{new} \mbox{\hyperlink{class_projectile_1_1_physics}{Physics}}();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00064}00064         \textcolor{keyword}{private} Random random = \textcolor{keyword}{new} Random();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00066}00066         \textcolor{keyword}{public} \mbox{\hyperlink{class_projectile_1_1_stage}{Stage}}(uint stageNumber, \textcolor{keywordtype}{float} slingshotX, \textcolor{keywordtype}{float} targetX, \textcolor{keywordtype}{float} g, \textcolor{keywordtype}{float} baseAlt, Color StageFontColor, Color ShotFontColor)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00067}00067         \{   \textcolor{comment}{// konstruktor etapu losowo generuje zmienne wysokości platform, maksymalnej energii strzału etc.}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00068}00068             this.textColor = StageFontColor;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00069}00069             this.shotTextcolor = ShotFontColor;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00070}00070             this.stageNumber = stageNumber;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00071}00071             this.g = g;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00072}00072             this.baseAlt = baseAlt;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00073}00073             this.LoadSlingshot();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00074}00074             this.LoadTarget();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00075}00075             this.CreatePlatforms();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00076}00076             this.slingshotX = slingshotX;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00077}00077             this.slingshotY = C.DEFAULT\_HEIGHT -\/ baseAlt -\/ slingTexture.Size.Y -\/ slingshotPlatformHeight;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00078}00078             this.targetX = targetX;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00079}00079             this.targetY = C.DEFAULT\_HEIGHT -\/ baseAlt -\/ targetTexture.Size.Y -\/ targetPlatformHeight;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00080}00080             this.LoadSlingshot();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00081}00081             this.LoadTarget();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00082}00082             this.LoadPlatforms();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00083}00083             this.LoadStageNumber();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00084}00084             this.LoadProjectile();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00085}00085             this.LoadString();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00086}00086             this.stringLimit = (slingshotX>baseAlt+slingTexture.Size.Y) ? slingTexture.Size.Y+baseAlt-\/5 : slingshotX-\/5;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00087}00087             \textcolor{keyword}{this}.GenerateConsts();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00088}00088             this.maxEnergy = physics.GetEnergy(stringK, stringLimit);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00089}00089             this.LoadConst();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00090}00090             this.LoadResult(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00091}00091         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00094}00094         \textcolor{keyword}{private} \textcolor{keywordtype}{void} LoadSlingshot()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00095}00095         \{   \textcolor{comment}{// metoda wczytująca procę z pliku graficznego}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00096}00096             this.slingTexture = \textcolor{keyword}{new} Texture(C.SLINGSHOT\_PATH);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00097}00097             this.slingSprite = \textcolor{keyword}{new} Sprite(slingTexture)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00098}00098             \{   \textcolor{comment}{// punkt origin odnosi się do położenia pocisku (w środku cięciwy)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00099}00099                 \textcolor{comment}{// pomaga to na etapie późniejszych obliczeń jego położenia}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00100}00100                 Origin = \textcolor{keyword}{new} Vector2f(slingTexture.Size.X / 2, 0),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00101}00101                 Position = \textcolor{keyword}{new} Vector2f(slingshotX, slingshotY)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00102}00102             \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00103}00103         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00105}00105         \textcolor{keyword}{private} \textcolor{keywordtype}{void} LoadTarget()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00106}00106         \{   \textcolor{comment}{// metoda wczytująca cel z pliku graficznego}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00107}00107             this.targetTexture = \textcolor{keyword}{new} Texture(C.TARGET\_PATH);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00108}00108             this.targetSprite = \textcolor{keyword}{new} Sprite(targetTexture)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00109}00109             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00110}00110                 Position = \textcolor{keyword}{new} Vector2f(targetX, targetY)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00111}00111             \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00112}00112         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00113}00113 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00114}00114         \textcolor{keyword}{private} \textcolor{keywordtype}{void} LoadProjectile()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00115}00115         \{   \textcolor{comment}{// metoda wczytująca kształt pocisku}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00116}00116             this.projectileShape = \textcolor{keyword}{new} CircleShape(C.PROJECTILE\_RAD)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00117}00117             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00118}00118                 OutlineThickness = C.PROJ\_BRD\_THICKNESS,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00119}00119                 OutlineColor = DisplayLevel.projBrdClr,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00120}00120                 FillColor = DisplayLevel.projFillClr,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00121}00121                 Origin = \textcolor{keyword}{new} Vector2f(C.PROJECTILE\_RAD, C.PROJECTILE\_RAD),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00122}00122                 Position = \textcolor{keyword}{new} Vector2f(slingshotX, slingshotY)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00123}00123             \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00124}00124         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00126}00126         \textcolor{keyword}{private} \textcolor{keywordtype}{void} LoadStageNumber()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00127}00127         \{   \textcolor{comment}{// metoda wczytująca napis pod nazwą poziomu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00128}00128             \textcolor{comment}{// informujący o aktualnie rozgrywanym etapie}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00129}00129             this.stageText = \textcolor{keyword}{new} Text(\$\textcolor{stringliteral}{"{}Stage \{stageNumber\}/3"{}}, \mbox{\hyperlink{namespace_projectile}{Projectile}}.mainFont, C.STAGE\_NUM\_TEXT\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00130}00130             FloatRect textRect = stageText.GetLocalBounds();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00131}00131             stageText.Origin = \textcolor{keyword}{new} Vector2f(textRect.Left + textRect.Width / 2, textRect.Top + textRect.Height / 2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00132}00132             stageText.Position = \textcolor{keyword}{new} Vector2f(C.DEFAULT\_WIDTH / 2, C.STAGE\_TOP\_MARGIN);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00133}00133             stageText.FillColor = textColor;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00134}00134         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00135}00135 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00138}00138         \textcolor{keyword}{private} \textcolor{keywordtype}{void} LoadPlatforms()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00139}00139         \{   \textcolor{comment}{// metoda wczytująca kształty platform, na których}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00140}00140             \textcolor{comment}{// w etapach 2 i 3 umieszczone są proca i cel}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00141}00141             Vector2f slingshotPlatformSize = \textcolor{keyword}{new} Vector2f(C.SLINGSHOT\_PLATFORM\_WIDTH, \textcolor{keyword}{this}.slingshotPlatformHeight);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00142}00142             this.slingshotPlatformShape = \textcolor{keyword}{new} RectangleShape(slingshotPlatformSize)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00143}00143             \{   \textcolor{comment}{// środek platformy znajduje się pod środkiem obiektu, który podtrzymuje}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00144}00144                 Origin = \textcolor{keyword}{new} Vector2f(C.SLINGSHOT\_PLATFORM\_WIDTH / 2, 0),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00145}00145                 Position = \textcolor{keyword}{new} Vector2f(slingshotX, slingshotY + slingTexture.Size.Y),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00146}00146                 FillColor = DisplayLevel.platformClr}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00147}00147             \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00148}00148             Vector2f targetPlatformSize = \textcolor{keyword}{new} Vector2f(C.TARGET\_PLATFORM\_WIDTH, \textcolor{keyword}{this}.targetPlatformHeight);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00149}00149             this.targetPlatformShape = \textcolor{keyword}{new} RectangleShape(targetPlatformSize)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00150}00150             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00151}00151                 Origin = \textcolor{keyword}{new} Vector2f(C.TARGET\_PLATFORM\_WIDTH / 2, 0),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00152}00152                 Position = \textcolor{keyword}{new} Vector2f(targetX + targetTexture.Size.X / 2, targetY + targetTexture.Size.Y),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00153}00153                 FillColor = DisplayLevel.platformClr}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00154}00154             \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00155}00155         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00156}00156 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00157}00157         \textcolor{keyword}{private} \textcolor{keywordtype}{void} LoadString()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00158}00158         \{   \textcolor{comment}{// metoda wczytująca kształt cięciwy procy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00159}00159             \textcolor{comment}{// jako dwie jej połowy zaczepione do odpowiednich ramion}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00160}00160             Vector2f stringSize = \textcolor{keyword}{new} Vector2f(slingTexture.Size.X / 2 -\/ C.STRING\_DISTANCE, C.STRING\_THICKNESS);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00161}00161             this.stringLeftShape = \textcolor{keyword}{new} RectangleShape(stringSize)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00162}00162             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00163}00163                 Origin = \textcolor{keyword}{new} Vector2f(0, C.STRING\_THICKNESS / 2),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00164}00164                 Position = \textcolor{keyword}{new} Vector2f(slingSprite.Position.X -\/ slingTexture.Size.X / 2 + C.STRING\_DISTANCE, slingSprite.Position.Y),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00165}00165                 FillColor = DisplayLevel.stringClr}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00166}00166             \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00167}00167             this.stringRightShape = \textcolor{keyword}{new} RectangleShape(stringSize)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00168}00168             \{   \textcolor{comment}{// prawa połowa cięciwy jest odwrócona o 180 stopni względem ramienia}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00169}00169                 Origin = \textcolor{keyword}{new} Vector2f(0, C.STRING\_THICKNESS / 2),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00170}00170                 Rotation = 180,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00171}00171                 Position = \textcolor{keyword}{new} Vector2f(slingSprite.Position.X + slingTexture.Size.X / 2 -\/ C.STRING\_DISTANCE, slingSprite.Position.Y),}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00172}00172                 FillColor = DisplayLevel.stringClr}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00173}00173             \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00174}00174         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00175}00175 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00176}00176         \textcolor{keyword}{private} \textcolor{keywordtype}{void} LoadConst()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00177}00177         \{   \textcolor{comment}{// metoda wczytująca stałe wylosowane wraz z utworzeniem obiektu etapu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00178}00178             \textcolor{keywordtype}{string} constTextString = \$\textcolor{stringliteral}{"{}X distance:\(\backslash\)t\{(targetX -\/ slingshotX) / C.DISTANCE\_SCALE\} m\(\backslash\)n"{}} +        }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00179}00179                                \$\textcolor{stringliteral}{"{}Slingshot\(\backslash\)'s altitude:\(\backslash\)t\{(C.DEFAULT\_HEIGHT-\/slingshotY-\/baseAlt-\/slingTexture.Size.Y) / C.DISTANCE\_SCALE\} m\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00180}00180                                \$\textcolor{stringliteral}{"{}Target\(\backslash\)'s altitude:\(\backslash\)t\{(C.DEFAULT\_HEIGHT -\/ targetY -\/ baseAlt -\/ targetTexture.Size.Y) / C.DISTANCE\_SCALE\} m\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00181}00181                                \$\textcolor{stringliteral}{"{}Slingshot\(\backslash\)'s height:\(\backslash\)t\{slingTexture.Size.Y / C.DISTANCE\_SCALE\} m\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00182}00182                                \$\textcolor{stringliteral}{"{}Target\(\backslash\)'s height:\(\backslash\)t\{targetTexture.Size.Y / C.DISTANCE\_SCALE\} m\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00183}00183                                \$\textcolor{stringliteral}{"{}Target\(\backslash\)'s width:\(\backslash\)t\{targetTexture.Size.X / C.DISTANCE\_SCALE\} m\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00184}00184                                \$\textcolor{stringliteral}{"{}Projectile's mass:\(\backslash\)t\{mass\} kg\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00185}00185                                \$\textcolor{stringliteral}{"{}Maximal energy:\(\backslash\)t\{maxEnergy\} J\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00186}00186                                \$\textcolor{stringliteral}{"{}g:\(\backslash\)t\{g\} m/s\(\backslash\)u00B2"{}};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00187}00187             this.constText = \textcolor{keyword}{new} Text(constTextString, \mbox{\hyperlink{namespace_projectile}{Projectile}}.mainFont, C.CONST\_TEXT\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00188}00188             constText.Position = \textcolor{keyword}{new} Vector2f(C.CONST\_TEXT\_LEFT\_MARGIN, C.CONST\_TEXT\_TOP\_MARGIN);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00189}00189             constText.FillColor = textColor;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00190}00190         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00191}00191 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00192}00192         \textcolor{keyword}{private} \textcolor{keywordtype}{void} UpdateFlightData()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00193}00193         \{   \textcolor{comment}{// metoda odświeżająca informacje o aktualnym położeniu pocisku}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00194}00194             \textcolor{comment}{// oraz prędkości, z jaką się porusza}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00195}00195             Vector2f coords = physics.UpdateCoords();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00196}00196             velocity = physics.UpdateVelocity();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00197}00197             \textcolor{keywordtype}{string} flightTextString = \$\textcolor{stringliteral}{"{}X position:\(\backslash\)t\{(coords.X-\/slingshotX)/ C.DISTANCE\_SCALE\} m\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00198}00198                                     \$\textcolor{stringliteral}{"{}Y position:\(\backslash\)t\{(C.DEFAULT\_HEIGHT-\/coords.Y-\/baseAlt) / C.DISTANCE\_SCALE\} m\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00199}00199                                     \$\textcolor{stringliteral}{"{}Velocity:\(\backslash\)t\{velocity / C.DISTANCE\_SCALE\} m/s"{}};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00200}00200             this.flightText = \textcolor{keyword}{new} Text(flightTextString, \mbox{\hyperlink{namespace_projectile}{Projectile}}.mainFont, C.FLIGHT\_TEXT\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00201}00201             flightText.Position = \textcolor{keyword}{new} Vector2f(C.FLIGHT\_TEXT\_LEFT\_MARGIN, C.FLIGHT\_TEXT\_TOP\_MARGIN);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00202}00202             flightText.FillColor = textColor;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00203}00203         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00204}00204 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00205}00205         \textcolor{keyword}{private} \textcolor{keywordtype}{void} UpdateShotData()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00206}00206         \{   \textcolor{comment}{// metoda odświeżająca informacje o kącie nachylenia}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00207}00207             \textcolor{comment}{// oraz energii kinetycznej, jaką otrzyma pocisk w momencie}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00208}00208             \textcolor{comment}{// puszczenia cięciwy procy w danym momencie}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00209}00209             \textcolor{keywordtype}{string} shotTextString = \$\textcolor{stringliteral}{"{}Energy:\(\backslash\)t\{energy\} J\(\backslash\)n"{}} +}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00210}00210                                     \$\textcolor{stringliteral}{"{}Angle:\(\backslash\)t\{-\/angle*180 / (float)Math.PI\}\(\backslash\)u00B0\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00211}00211             this.shotText = \textcolor{keyword}{new} Text(shotTextString, \mbox{\hyperlink{namespace_projectile}{Projectile}}.mainFont, C.SHOT\_TEXT\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00212}00212             shotText.Position = \textcolor{keyword}{new} Vector2f(C.SHOT\_TEXT\_LEFT\_MARGIN, C.SHOT\_TEXT\_TOP\_MARGIN);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00213}00213             shotText.FillColor = shotTextcolor;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00214}00214         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00215}00215 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00216}00216         \textcolor{keyword}{public} \textcolor{keywordtype}{void} UpdateString(\mbox{\hyperlink{class_projectile_1_1_loop}{Loop}} loop)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00217}00217         \{   \textcolor{comment}{// w klasie obliczane są długości i kąty nachylenia prostokątów tworzących cięciwę}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00218}00218             \textcolor{comment}{// tak, aby podążały za ruchami myszki}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00219}00219             Vector2i mousePos = Mouse.GetPosition(loop.Window);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00220}00220             \textcolor{keywordtype}{float} length = (float)Math.Sqrt(Math.Pow(slingshotX -\/ mousePos.X, 2) + Math.Pow(slingshotY -\/ mousePos.Y, 2));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00221}00221             \textcolor{keywordtype}{float} alpha = (float)Math.Asin((slingshotY -\/ mousePos.Y) / length);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00222}00222             \textcolor{comment}{// ograniczenie przed strzelaniem w przeciwnym kierunku (kąt maksymalny +/-\/90 st.)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00223}00223             \textcolor{keywordflow}{if} (slingshotX -\/ mousePos.X < 0)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00224}00224             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00225}00225                 alpha = (slingshotY -\/ mousePos.Y <= 0) ? (\textcolor{keywordtype}{float})-\/Math.PI / 2 : (float)Math.PI / 2;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00226}00226                 mousePos.X = (\textcolor{keywordtype}{int})slingshotX;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00227}00227             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00228}00228             \textcolor{comment}{// ograniczenie rozciągania cięciwy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00229}00229             \textcolor{keywordflow}{if} (length > stringLimit)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00230}00230             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00231}00231                 length = stringLimit;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00232}00232                 mousePos.X = (int)(slingshotX -\/ Math.Cos(alpha) * length);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00233}00233                 mousePos.Y = (int)(slingshotY -\/ Math.Sin(alpha) * length);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00234}00234             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00235}00235             \textcolor{comment}{// zmienne przypisywane nadmiarowo służą do wyznaczenia ruchu cięciwy w trakcie powrotu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00236}00236             this.length = length;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00237}00237             this.str\_prev = length;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00238}00238             this.stretch = length;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00239}00239             this.angle = alpha;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00240}00240             \textcolor{comment}{// wyznaczenie energii dla obecnego naciągnięcia}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00241}00241             this.energy = physics.GetEnergy(stringK, stretch);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00242}00242             \textcolor{comment}{//obliczanie skalowania i nachylenia dla poszczególnych fragmentów cięciwy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00243}00243             \textcolor{keywordtype}{float} Y = slingshotY -\/ mousePos.Y;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00244}00244             \textcolor{keywordtype}{float} leftX = slingshotX -\/ slingTexture.Size.X / 2 + C.STRING\_DISTANCE -\/ mousePos.X;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00245}00245             \textcolor{keywordtype}{float} leftLength = (float)Math.Sqrt(Math.Pow(leftX, 2) + Math.Pow(Y, 2));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00246}00246             \textcolor{keywordtype}{float} rightX = slingshotX + slingTexture.Size.X / 2 -\/ C.STRING\_DISTANCE -\/ mousePos.X;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00247}00247             \textcolor{keywordtype}{float} rightLength = (float)Math.Sqrt(Math.Pow(rightX, 2) + Math.Pow(Y, 2));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00248}00248             \textcolor{keywordtype}{float} leftAlpha = (Y < 0) ? -\/(\textcolor{keywordtype}{float})(Math.Acos(leftX / leftLength) + Math.PI) : -\/(\textcolor{keywordtype}{float})(Math.PI -\/ Math.Acos(leftX / leftLength));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00249}00249             \textcolor{keywordtype}{float} rightAlpha = -\/(float)(Math.PI -\/ Math.Asin(Y / rightLength));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00250}00250             \textcolor{keywordtype}{float} leftScale = leftLength / stringLeftShape.Size.X;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00251}00251             \textcolor{keywordtype}{float} rightScale = rightLength / stringRightShape.Size.X;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00252}00252             \textcolor{comment}{// przypisanie nowych skali i pozycji pocisku}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00253}00253             stringLeftShape.Scale = \textcolor{keyword}{new} Vector2f(leftScale, 1);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00254}00254             stringLeftShape.Rotation = leftAlpha * 180 / (float)Math.PI;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00255}00255             stringRightShape.Scale = \textcolor{keyword}{new} Vector2f(rightScale, 1);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00256}00256             stringRightShape.Rotation = rightAlpha * 180 / (float)Math.PI;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00257}00257             projectileShape.Position = (Vector2f)mousePos;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00258}00258         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00259}00259 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00260}00260         \textcolor{keyword}{private} \textcolor{keywordtype}{void} CreatePlatforms()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00261}00261         \{   \textcolor{comment}{// generowanie wysokości platform odpowiednich dla aktualnego etapu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00262}00262             \textcolor{keywordflow}{switch} (stageNumber)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00263}00263             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00264}00264                 \textcolor{keywordflow}{case} 1:}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00265}00265                     this.slingshotPlatformHeight = 0;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00266}00266                     this.targetPlatformHeight = 0;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00267}00267                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00268}00268                 \textcolor{keywordflow}{case} 2:}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00269}00269                     \textcolor{comment}{// -\/150 / -\/250 ogranicza wysokość platformy, aby nie nachodzić na obszary stałych}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00270}00270                     \textcolor{comment}{// ani przycisku wyświetlania teorii}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00271}00271                     \textcolor{comment}{// wysokość platformy zmieniana jest co 25px czyli co 0,5m przy programowym przeliczniku 50 px/m}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00272}00272                     this.targetPlatformHeight = (int)((random.Next((\textcolor{keywordtype}{int})((C.DEFAULT\_HEIGHT -\/ baseAlt-\/150 -\/ targetTexture.Size.Y) / C.DISTANCE\_SCALE*2)) + 1) * C.DISTANCE\_SCALE / 2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00273}00273                     this.slingshotPlatformHeight = 0;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00274}00274                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00275}00275                 \textcolor{keywordflow}{case} 3:}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00276}00276                     this.slingshotPlatformHeight = (int)((random.Next((\textcolor{keywordtype}{int})((C.DEFAULT\_HEIGHT -\/ baseAlt -\/ 250 -\/ slingTexture.Size.Y) / C.DISTANCE\_SCALE * 2)) + 1) * C.DISTANCE\_SCALE / 2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00277}00277                     \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00278}00278                     \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00279}00279                         this.targetPlatformHeight = (int)((random.Next((\textcolor{keywordtype}{int})((C.DEFAULT\_HEIGHT -\/ baseAlt -\/ 150 -\/ targetTexture.Size.Y) / C.DISTANCE\_SCALE * 2)) + 1) * C.DISTANCE\_SCALE / 2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00280}00280                     \} \textcolor{keywordflow}{while} (this.slingshotPlatformHeight == this.targetPlatformHeight);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00281}00281                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00282}00282                 \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00283}00283                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00284}00284             \} }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00285}00285         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00286}00286 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00287}00287         \textcolor{keyword}{private} \textcolor{keywordtype}{void} GenerateConsts()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00288}00288         \{   \textcolor{comment}{// metoda generująca masę pocisku oraz pseudo-\/stałą sprężystości gumy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00289}00289             \textcolor{comment}{// (nie odpowiada jej ona dokładnie w fizycznym znaczeniu ale pomaga w dalszych obliczeniach)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00290}00290             this.mass = (random.Next(9)) / 2f + 1;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00291}00291             \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00292}00292             \{   \textcolor{comment}{// dla skrajnych warunków k=\string~550, dodane zostało 100 dla zapasu dla}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00293}00293                 \textcolor{comment}{// różnorodności konfiguracji w skrajnych warunkach}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00294}00294                 this.stringK = (random.Next(650000) + 1) / 1000f;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00295}00295             \} \textcolor{keywordflow}{while} (!CheckK());}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00296}00296         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00297}00297 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00298}00298         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} CheckK()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00299}00299         \{   \textcolor{comment}{// metoda sprawdzająca czy przy wylosowanym K oddanie strzału nie będzie trywialne}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00300}00300             \textcolor{comment}{// (przy kącie <15 st. względem linii proca-\/pocisk pocisk na pewno nie doleci)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00301}00301             \textcolor{comment}{// oraz czy dla nachylenia co najmniej 45 st. względem linii proca-\/pocisk}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00302}00302             \textcolor{comment}{// trafienie jest możliwe (granice 15 i 45 st. możliwe do regulacji przez stałe)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00303}00303             \textcolor{keywordtype}{float} diffAngle = (float)Math.Atan2((\textcolor{keywordtype}{int})(targetPlatformHeight -\/ slingshotPlatformHeight -\/ slingTexture.Size.Y + targetTexture.Size.Y), (\textcolor{keywordtype}{int})(targetX -\/ slingshotX));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00304}00304             \textcolor{keywordtype}{float} checkLowAngle = diffAngle + C.ANGLE\_CUTOFF * (float)Math.PI / 180;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00305}00305             \textcolor{keywordtype}{float} checkHighAngle = diffAngle + C.ANGLE\_SAFE\_K * (\textcolor{keywordtype}{float})Math.PI / 180; }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00306}00306             \textcolor{comment}{// podstawienie skrajnych danych do wzorów opisujących ruch poziomy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00307}00307             \textcolor{keywordtype}{float} tLow = (targetX -\/ slingshotX) / (\textcolor{keywordtype}{float})(Math.Cos(checkLowAngle) * Math.Sqrt(stringK * Math.Pow(stringLimit, 2) / mass));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00308}00308             \textcolor{keywordtype}{float} tSafe = (targetX -\/ slingshotX) / (\textcolor{keywordtype}{float})(Math.Cos(checkHighAngle) * Math.Sqrt(stringK * Math.Pow(stringLimit, 2) / mass));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00309}00309             \textcolor{keywordtype}{float} yLow = (float)(Math.Sqrt(stringK * Math.Pow(stringLimit, 2) / mass) * Math.Sin(checkLowAngle) * tLow -\/ C.DISTANCE\_SCALE * g * Math.Pow(tLow, 2) / 2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00310}00310             \textcolor{keywordtype}{float} ySafe = (float)(Math.Sqrt(stringK * Math.Pow(stringLimit, 2) / mass) * Math.Sin(checkHighAngle) * tSafe -\/ C.DISTANCE\_SCALE * g * Math.Pow(tSafe, 2) / 2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00311}00311             \textcolor{keywordflow}{if} (yLow + slingshotPlatformHeight + (\textcolor{keywordtype}{int})slingTexture.Size.Y >= (float)targetPlatformHeight || ySafe + slingshotPlatformHeight + (\textcolor{keywordtype}{int})slingTexture.Size.Y < (float)(targetPlatformHeight + targetTexture.Size.Y ))}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00312}00312             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00313}00313                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00314}00314             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00315}00315             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00316}00316                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00317}00317         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00318}00318 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00319}00319         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ReturnString(\textcolor{keywordtype}{float} dt)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00320}00320         \{   \textcolor{comment}{// metoda obliczająca położenie cięciwy zaraz po oddaniu strzału}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00321}00321             \textcolor{comment}{// zanim pocisk zacznie opuszczać procę}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00322}00322             \textcolor{comment}{// poniższy wzór to przybliżona różniczka zmiany naciągu po czasie -\/ równanie różnicowe}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00323}00323             \textcolor{comment}{// wyprowadzone z energii kx2\string^2/2 -\/ kx1\string^2/2 = mv\string^2/2, gdzie v = ds/dt, a x1, x2 to naciągi w punkcie początkowym i aktualnym}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00324}00324             \textcolor{comment}{// widać tu uproszczenie kx\string^2/2 nie jest energią naciągu, ponieważ pominięta zostaje strata na uniesienie}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00325}00325             \textcolor{comment}{// pocisku z powrotem do pozycji wylotowej}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00326}00326             stretch = ((mass * str\_prev -\/ dt * (float)Math.Sqrt(stringK * (stringK * (\textcolor{keywordtype}{float})Math.Pow(length, 2) * (\textcolor{keywordtype}{float})Math.Pow(dt, 2) -\/ mass * (\textcolor{keywordtype}{float})Math.Pow(str\_prev, 2) + mass * (\textcolor{keywordtype}{float})Math.Pow(length, 2)))) / (stringK * (float)Math.Pow(dt, 2) + mass));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00327}00327             \textcolor{keywordflow}{if} (stretch<0)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00328}00328                 stretch = 0;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00329}00329             \textcolor{comment}{// przepisywanie poprzedniego naciągu do wykorzystania w równaniu różnicowym}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00330}00330             this.str\_prev = stretch;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00331}00331             Vector2f projectilePos = \textcolor{keyword}{new} Vector2f(slingshotX -\/ (\textcolor{keywordtype}{float})Math.Cos(angle) * stretch, slingshotY -\/ (\textcolor{keywordtype}{float})Math.Sin(angle) * stretch);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00332}00332             \textcolor{comment}{// gdyby wyliczona kolejna pozycja procy i gumy wychodziła za punkt wylotu, ustaw pozycję na punkt wylotu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00333}00333             \textcolor{keywordflow}{if} (projectilePos.X > slingshotX)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00334}00334                 projectilePos = \textcolor{keyword}{new} Vector2f(slingshotX, slingshotY);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00335}00335             \textcolor{comment}{// obliczenia długości i kątów nachylenia poszczególnych połówek cięciwy procy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00336}00336             \textcolor{keywordtype}{float} Y = slingshotY -\/ projectilePos.Y;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00337}00337             \textcolor{keywordtype}{float} leftX = slingshotX -\/ slingTexture.Size.X / 2 + C.STRING\_DISTANCE -\/ projectilePos.X;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00338}00338             \textcolor{keywordtype}{float} leftLength = (float)Math.Sqrt(Math.Pow(leftX, 2) + Math.Pow(Y, 2));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00339}00339             \textcolor{keywordtype}{float} rightX = slingshotX + slingTexture.Size.X / 2 -\/ C.STRING\_DISTANCE -\/ projectilePos.X;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00340}00340             \textcolor{keywordtype}{float} rightLength = (float)Math.Sqrt(Math.Pow(rightX, 2) + Math.Pow(Y, 2));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00341}00341             \textcolor{keywordtype}{float} leftAlpha = (Y < 0) ? -\/(\textcolor{keywordtype}{float})(Math.Acos(leftX / leftLength) + Math.PI) : -\/(\textcolor{keywordtype}{float})(Math.PI -\/ Math.Acos(leftX / leftLength));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00342}00342             \textcolor{keywordtype}{float} rightAlpha = -\/(float)(Math.PI -\/ Math.Asin(Y / rightLength));}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00343}00343             \textcolor{keywordtype}{float} leftScale = leftLength / stringLeftShape.Size.X;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00344}00344             \textcolor{keywordtype}{float} rightScale = rightLength / stringRightShape.Size.X;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00345}00345             \textcolor{comment}{// skalowanie i obracanie połówek cięciwy wg powyższych wyliczeń}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00346}00346             stringLeftShape.Scale = \textcolor{keyword}{new} Vector2f(leftScale, 1);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00347}00347             stringLeftShape.Rotation = leftAlpha * 180 / (float)Math.PI;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00348}00348             stringRightShape.Scale = \textcolor{keyword}{new} Vector2f(rightScale, 1);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00349}00349             stringRightShape.Rotation = rightAlpha * 180 / (float)Math.PI;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00350}00350             projectileShape.Position = projectilePos;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00351}00351         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00352}00352 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00353}00353         \textcolor{keyword}{private} \textcolor{keywordtype}{int} CheckHit()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00354}00354         \{   \textcolor{comment}{// metoda sprawdzająca czy środek pocisku znajduje się w obszarze celu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00355}00355             Vector2f projectilePosition = projectileShape.Position;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00356}00356             Vector2f targetSize = (Vector2f)targetTexture.Size;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00357}00357             if (projectilePosition.X >= targetSprite.Position.X \&\& projectilePosition.X <= targetSprite.Position.X + targetSize.X \&\&}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00358}00358                  projectilePosition.Y >= targetSprite.Position.Y \&\& projectilePosition.Y <= targetSprite.Position.Y + targetSize.Y)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00359}00359             \{   \textcolor{comment}{// przypadek trafienia -\/ głośność zależna od energii strzału i planety}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00360}00360                 \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.hitSound.Volume = 100 * (float)Math.Sqrt(g / C.G\_KEPLER) * energy / maxEnergy;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00361}00361                 \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.hitSound.Play();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00362}00362                 \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00363}00363             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00364}00364             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (projectilePosition.X > targetSprite.Position.X + targetSize.X || projectilePosition.Y > C.DEFAULT\_HEIGHT -\/ baseAlt)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00365}00365             \{   \textcolor{comment}{// przypadek wylecenia pocisku poza obszar, w którym możliwe jest trafienie}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00366}00366                 \textcolor{keywordflow}{if} (projectilePosition.Y > C.DEFAULT\_HEIGHT -\/ baseAlt)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00367}00367                 \{   \textcolor{comment}{// upadek na ziemię -\/ odtworzenie dźwięku}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00368}00368                     \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.missSound.Volume = 100 * (float)Math.Sqrt(g / C.G\_KEPLER) * energy / maxEnergy;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00369}00369                     \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.missSound.Play();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00370}00370                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00371}00371                 \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00372}00372             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00373}00373             \textcolor{comment}{// pocisk ciągle w trakcie lotu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00374}00374             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00375}00375                 \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00376}00376         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00377}00377 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00378}00378         \textcolor{keyword}{private} \textcolor{keywordtype}{void} LoadResult(\textcolor{keywordtype}{bool} result)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00379}00379         \{   \textcolor{comment}{// metoda wczytująca wynik strzału}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00380}00380             \textcolor{comment}{// jest rozbudowana ze względu na różne możliwe}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00381}00381             \textcolor{comment}{// do uzyskania rezultaty w zależności od numeru poziomu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00382}00382             \textcolor{comment}{// i sukcesu bądź porażki}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00383}00383             Vector2f resultSize = \textcolor{keyword}{new} Vector2f(C.RESULT\_WIDTH, C.RESULT\_HEIGHT);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00384}00384             Vector2f resultBtnSize = \textcolor{keyword}{new} Vector2f(C.RESULT\_BTN\_WIDTH, C.RESULT\_BTN\_HEIGHT);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00385}00385             this.resultShape = \textcolor{keyword}{new} RectangleShape(resultSize)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00386}00386             \{   \textcolor{comment}{// kształt okna wyniku -\/ wspólny dla wszystkich wyników}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00387}00387                 OutlineThickness = C.RESULT\_BRD\_THICKNESS,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00388}00388                 OutlineColor = DisplayLevel.resultBrdClr,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00389}00389                 FillColor = DisplayLevel.resultFillClr,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00390}00390                 Position = \textcolor{keyword}{new} Vector2f((C.DEFAULT\_WIDTH -\/ C.RESULT\_WIDTH) / 2, (C.DEFAULT\_HEIGHT -\/ C.RESULT\_HEIGHT) / 2)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00391}00391             \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00392}00392             \textcolor{comment}{// ustawienie napisów odpowiednich dla uzyskanego wyniku}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00393}00393             SetResultStrings(result);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00394}00394             \textcolor{comment}{// dla ostatniego etapu inny rozmiar czcionki ze względu na więcej znaków}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00395}00395             \textcolor{keywordflow}{if} (stageNumber == 3 \&\& result)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00396}00396                 this.resultText = \textcolor{keyword}{new} Text(mainResultString, \mbox{\hyperlink{namespace_projectile}{Projectile}}.mainFont, C.RESULT\_LAST\_TEXT\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00397}00397             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00398}00398                 this.resultText = \textcolor{keyword}{new} Text(mainResultString, \mbox{\hyperlink{namespace_projectile}{Projectile}}.mainFont, C.RESULT\_TEXT\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00399}00399             \textcolor{comment}{// wycentrowanie napisu dzięki informacją uzyskaną z GetLocalBounds()}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00400}00400             FloatRect textRect = resultText.GetLocalBounds();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00401}00401             resultText.Origin = \textcolor{keyword}{new} Vector2f(textRect.Left + textRect.Width / 2, textRect.Top + textRect.Height / 2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00402}00402             resultText.Position = \textcolor{keyword}{new} Vector2f(C.DEFAULT\_WIDTH / 2, resultShape.Position.Y+C.RESULT\_TEXT\_TOP\_MARGIN+textRect.Height/2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00403}00403             resultText.OutlineColor = Color.Black;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00404}00404             resultText.OutlineThickness = 2f;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00405}00405             \textcolor{comment}{// zmiana koloru napisu w zależności od wyniku}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00406}00406             \textcolor{keywordflow}{if} (result)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00407}00407                 resultText.FillColor = DisplayLevel.successClr;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00408}00408             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00409}00409                 resultText.FillColor = DisplayLevel.failureClr;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00410}00410             \textcolor{comment}{// lewy przycisk -\/ powrót do menu (MAIN MENU)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00411}00411             this.resultLeftText = \textcolor{keyword}{new} Text(leftResultString, \mbox{\hyperlink{namespace_projectile}{Projectile}}.mainFont, C.RESULT\_BTN\_TEXT\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00412}00412             FloatRect resultLeftTextRect = resultLeftText.GetLocalBounds();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00413}00413             \textcolor{comment}{// dla ostatniego etapu położenie tekstu na środku (brak prawego tekstu w razie sukcesu)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00414}00414             \textcolor{keywordflow}{if} (stageNumber == 3 \&\& result)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00415}00415                 resultLeftText.Position = \textcolor{keyword}{new} Vector2f(resultShape.Position.X + resultShape.Size.X/2, resultShape.Position.Y + resultShape.Size.Y -\/ resultBtnSize.Y/2 -\/ C.RESULT\_BTN\_BOTTOM\_MARGIN);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00416}00416             \textcolor{keywordflow}{else}    }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00417}00417                 resultLeftText.Position = \textcolor{keyword}{new} Vector2f(resultShape.Position.X + resultBtnSize.X / 2 + C.RESULT\_BTN\_WIDTH\_MARGIN, resultShape.Position.Y + resultShape.Size.Y -\/ resultBtnSize.Y/2 -\/ C.RESULT\_BTN\_BOTTOM\_MARGIN);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00418}00418             resultLeftText.Origin = \textcolor{keyword}{new} Vector2f(resultLeftTextRect.Left + resultLeftTextRect.Width / 2, resultLeftTextRect.Top + resultLeftTextRect.Height / 2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00419}00419             this.resultLeftBtnShape = \textcolor{keyword}{new} RectangleShape(resultBtnSize)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00420}00420             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00421}00421                 OutlineThickness = C.RESULT\_BRD\_THICKNESS,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00422}00422                 OutlineColor = DisplayLevel.resultBrdClr,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00423}00423                 FillColor = DisplayLevel.resultBtnClr}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00424}00424             \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00425}00425             \textcolor{comment}{// dla ostatniego etapu położenie przycisku na środku (brak prawego przycisku w razie sukcesu)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00426}00426             \textcolor{keywordflow}{if} (stageNumber == 3 \&\& result)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00427}00427                 resultLeftBtnShape.Position = \textcolor{keyword}{new} Vector2f(resultShape.Position.X + resultShape.Size.X / 2 -\/ resultLeftBtnShape.Size.X / 2, resultShape.Position.Y + resultShape.Size.Y -\/ resultBtnSize.Y -\/ C.RESULT\_BTN\_BOTTOM\_MARGIN);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00428}00428             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00429}00429                 resultLeftBtnShape.Position = \textcolor{keyword}{new} Vector2f(resultShape.Position.X + C.RESULT\_BTN\_WIDTH\_MARGIN, resultShape.Position.Y + resultShape.Size.Y -\/ resultBtnSize.Y -\/ C.RESULT\_BTN\_BOTTOM\_MARGIN);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00430}00430             \textcolor{comment}{// jeśli to nie ostatni etap zakończony sukcesem wyświetl przycisk ponownej próby (TRY AGAIN)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00431}00431             \textcolor{keywordflow}{if} (!(stageNumber == 3 \&\& result))}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00432}00432             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00433}00433                 this.resultRightText = \textcolor{keyword}{new} Text(rightResultString, \mbox{\hyperlink{namespace_projectile}{Projectile}}.mainFont, C.RESULT\_BTN\_TEXT\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00434}00434                 FloatRect resultRightTextRect = resultRightText.GetLocalBounds();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00435}00435                 resultRightText.Position = \textcolor{keyword}{new} Vector2f(resultShape.Position.X + resultShape.Size.X -\/ resultBtnSize.X/2 -\/ C.RESULT\_BTN\_WIDTH\_MARGIN, resultShape.Position.Y + resultShape.Size.Y -\/ resultBtnSize.Y/2 -\/ C.RESULT\_BTN\_BOTTOM\_MARGIN);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00436}00436                 resultRightText.Origin = \textcolor{keyword}{new} Vector2f(resultRightTextRect.Left + resultRightTextRect.Width / 2, resultRightTextRect.Top + resultRightTextRect.Height / 2);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00437}00437                 this.resultRightBtnShape = \textcolor{keyword}{new} RectangleShape(resultBtnSize)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00438}00438                 \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00439}00439                     OutlineThickness = C.RESULT\_BRD\_THICKNESS,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00440}00440                     OutlineColor = DisplayLevel.resultBrdClr,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00441}00441                     FillColor = DisplayLevel.resultBtnClr,}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00442}00442                     Position = \textcolor{keyword}{new} Vector2f(resultShape.Position.X + resultShape.Size.X -\/ resultBtnSize.X -\/ C.RESULT\_BTN\_WIDTH\_MARGIN, resultShape.Position.Y + resultShape.Size.Y -\/ resultBtnSize.Y -\/ C.RESULT\_BTN\_BOTTOM\_MARGIN)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00443}00443                 \};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00444}00444             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00445}00445         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00446}00446 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00447}00447         \textcolor{keyword}{public} Vector2f GetLeftButtonCoords()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00448}00448         \{   \textcolor{comment}{// zwracanie koordynatów lewego przycisku w trakcie}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00449}00449             \textcolor{comment}{// wyświetlania wyniku (może być po lewej lub na środku)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00450}00450             Vector2f btnCoords = \textcolor{keyword}{new} Vector2f(resultLeftBtnShape.Position.X, resultLeftBtnShape.Position.Y);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00451}00451             \textcolor{keywordflow}{return} btnCoords;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00452}00452         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00453}00453         \textcolor{keyword}{public} Vector2f GetRightButtonCoords()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00454}00454         \{   \textcolor{comment}{// zwracanie koordynatów prawego przycisku w trakcie}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00455}00455             \textcolor{comment}{// wyświetlania wyniku (może nie być zdefiniowany)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00456}00456             Vector2f btnCoords = \textcolor{keyword}{new} Vector2f(resultRightBtnShape.Position.X, resultRightBtnShape.Position.Y);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00457}00457             \textcolor{keywordflow}{return} btnCoords;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00458}00458         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00459}00459 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00460}00460         \textcolor{keyword}{public} Vector2f GetSlingshotCoords()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00461}00461         \{   \textcolor{comment}{// zwracanie koordynatów procy (program umożliwia zmianę jej położenia)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00462}00462             Vector2f slingshotCoords = \textcolor{keyword}{new} Vector2f(slingshotX, slingshotY);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00463}00463             \textcolor{keywordflow}{return} slingshotCoords;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00464}00464         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00465}00465 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00466}00466         \textcolor{keyword}{public} Vector2f GetProjectileCoords()}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00467}00467         \{   \textcolor{comment}{// zwracanie koordynatów pocisku (zmienia położenie w trakcie celowania)}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00468}00468             Vector2f projectileCoords = \textcolor{keyword}{new} Vector2f(projectileShape.Position.X, projectileShape.Position.Y);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00469}00469             \textcolor{keywordflow}{return} projectileCoords;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00470}00470         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00471}00471 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00472}00472         \textcolor{keyword}{private} \textcolor{keywordtype}{void} SetResultStrings(\textcolor{keywordtype}{bool} result)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00473}00473         \{   \textcolor{comment}{// metoda ustawiająca napisy w zależności od wyniku strzału}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00474}00474             \textcolor{keywordflow}{if} (result \&\& stageNumber == 3)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00475}00475             \{   \textcolor{comment}{// sukces -\/ ostatni etap}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00476}00476                 this.mainResultString = C.SUCCESS\_LAST\_MAIN;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00477}00477                 this.leftResultString = C.SUCCESS\_LEFT;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00478}00478                 this.rightResultString = C.SUCCESS\_RIGHT;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00479}00479             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00480}00480             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (result)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00481}00481             \{   \textcolor{comment}{// sukces -\/ pozostałe przypadki}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00482}00482                 this.mainResultString = C.SUCCESS\_MAIN;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00483}00483                 this.leftResultString = C.SUCCESS\_LEFT;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00484}00484                 this.rightResultString = C.SUCCESS\_RIGHT;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00485}00485             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00486}00486             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00487}00487             \{   \textcolor{comment}{// porażka}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00488}00488                 this.mainResultString = C.FAILURE\_MAIN;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00489}00489                 this.leftResultString = C.FAILURE\_LEFT;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00490}00490                 this.rightResultString = C.FAILURE\_RIGHT;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00491}00491             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00492}00492         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00493}00493 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00494}00494         \textcolor{keyword}{public} \textcolor{keywordtype}{void} UpdateStage(ref \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action activity, \mbox{\hyperlink{class_projectile_1_1_loop}{Loop}} loop)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00495}00495         \{   \textcolor{comment}{// odświeżanie danych kolejnego cyklu przez wykonanie obliczeń}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00496}00496             \textcolor{comment}{// charakterystycznych do procesu, który jest aktualnie wykonywany}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00497}00497             \textcolor{comment}{// w trakcie rozgrywki, metoda wykonuje różne obliczenia w zależności}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00498}00498             \textcolor{comment}{// od zmiennej activity}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00499}00499             \textcolor{keywordflow}{if} (activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.result)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00500}00500             \{   \textcolor{comment}{// w przypadku czynności wyświetlania rezultatu wczytaj}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00501}00501                 \textcolor{comment}{// go z odpowiednimi danymi}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00502}00502                 \textcolor{keywordflow}{if} (updatedResult == -\/1)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00503}00503                     success = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00504}00504                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (updatedResult == 1)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00505}00505                     success = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00506}00506                 LoadResult(success);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00507}00507                 updatedResult = 0;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00508}00508             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00509}00509             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.flight)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00510}00510             \{   \textcolor{comment}{// w przypadku lotu pocisku sprawdzaj, czy dostępny}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00511}00511                 \textcolor{comment}{// jest wynik strzału}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00512}00512                 \textcolor{keywordflow}{if} (updatedResult == 0)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00513}00513                 \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00514}00514                     updatedResult = CheckHit();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00515}00515                     projectileShape.Position = physics.UpdateCoords();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00516}00516                     UpdateFlightData();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00517}00517                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00518}00518                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (updatedResult != 0)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00519}00519                 \{   \textcolor{comment}{// wyłączenie zegara stanowiącego licznik}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00520}00520                     \textcolor{comment}{// czasu w module fizyki}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00521}00521                     physics.clock.Dispose();   }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00522}00522                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00523}00523             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00524}00524             }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00525}00525             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.acc)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00526}00526             \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00527}00527                 \textcolor{keywordflow}{if} (!clockRun)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00528}00528                 \{   \textcolor{comment}{// zegar służy do obliczeń zachowania cięciwy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00529}00529                     \textcolor{comment}{// i włączany jest tylko raz}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00530}00530                     clock = \textcolor{keyword}{new} Clock();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00531}00531                     clockRun = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00532}00532                     t\_prev = clock.ElapsedTime.AsSeconds();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00533}00533                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00534}00534                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (projectileShape.Position != slingSprite.Position \&\& clockRun)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00535}00535                 \{   \textcolor{comment}{// odświeżenie długości powracającej cięciwy z przekazaniem}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00536}00536                     \textcolor{comment}{// przyrostu czasu do równiania różnicowego}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00537}00537                     ReturnString(clock.ElapsedTime.AsSeconds() -\/ t\_prev);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00538}00538                     t\_prev = clock.ElapsedTime.AsSeconds();     }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00539}00539                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00540}00540                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00541}00541                 \{   \textcolor{comment}{// wyłączenie zegara po powrocie cięciwy do puntu zerowego}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00542}00542                     \textcolor{comment}{// z przejściem do procesu lotu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00543}00543                     clock.Dispose();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00544}00544                     clockRun = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00545}00545                     activity = \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.flight;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00546}00546                     \textcolor{comment}{// inicjalizacja fizyki z podaniem parametrów ustalonych przez gracza}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00547}00547                     \textcolor{comment}{// oraz stałych charakterystycznych dla obecnego poziomu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00548}00548                     physics.InitShot(-\/angle, energy, mass, projectileShape.Position, g);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00549}00549                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00550}00550             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00551}00551             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.aiming)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00552}00552             \{   \textcolor{comment}{// w procesie celowania odświeżaj położenie cięciwy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00553}00553                 \textcolor{comment}{// i pocisku dopóki wciśnięty jest lewy przycisk myszy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00554}00554                 \textcolor{comment}{// a także aktualizuj dane strzału wyświetlane obok procy}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00555}00555                 \textcolor{keywordflow}{if} (Mouse.IsButtonPressed(Mouse.Button.Left))}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00556}00556                 \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00557}00557                     UpdateShotData();}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00558}00558                     UpdateString(loop);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00559}00559                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00560}00560             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00561}00561   }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00562}00562         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00563}00563 }
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00564}00564         \textcolor{keyword}{public} \textcolor{keywordtype}{void} Draw(\mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action activity, \mbox{\hyperlink{class_projectile_1_1_loop}{Loop}} loop)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00565}00565         \{   \textcolor{comment}{// umieść w oknie elementy etapu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00566}00566             \textcolor{keywordflow}{if} (activity != \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.theory)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00567}00567             \{   \textcolor{comment}{// chowanie stałych i napisu podczas}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00568}00568                 \textcolor{comment}{// wyświetlania planszy teorii}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00569}00569                 loop.Window.Draw(this.constText);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00570}00570                 loop.Window.Draw(this.stageText);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00571}00571             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00572}00572             loop.Window.Draw(this.slingSprite);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00573}00573             loop.Window.Draw(this.targetSprite);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00574}00574             loop.Window.Draw(this.stringLeftShape);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00575}00575             loop.Window.Draw(this.stringRightShape);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00576}00576             loop.Window.Draw(this.projectileShape);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00577}00577             loop.Window.Draw(this.slingshotPlatformShape);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00578}00578             loop.Window.Draw(this.targetPlatformShape);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00579}00579             \textcolor{comment}{// dane lotu wyświetlane są dopiero po rozpoczęciu lotu}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00580}00580             \textcolor{keywordflow}{if} ((activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.result || activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.flight) \&\& flightText != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00581}00581                 loop.Window.Draw(this.flightText);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00582}00582             \textcolor{comment}{// dane celowania wyświetlane są dopiero po rozpoczęciu celowania}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00583}00583             \textcolor{keywordflow}{if} (activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.aiming || activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.acc || activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.flight || activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.result)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00584}00584                 loop.Window.Draw(this.shotText);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00585}00585             \textcolor{comment}{// okno wyniku}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00586}00586             \textcolor{keywordflow}{if} (activity == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Action.result \&\& resultShape != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00587}00587             \{   \textcolor{comment}{// reakcja przycisków na obecność nad nimi kursora}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00588}00588                 \textcolor{keywordflow}{if} (MouseEventsGame.CheckArea(loop, \textcolor{keyword}{this}) != \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Area.leftButton \&\& resultLeftBtnShape.OutlineColor == Color.White)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00589}00589                 \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00590}00590                     resultLeftBtnShape.OutlineColor = DisplayLevel.resultBrdClr;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00591}00591                     resultLeftBtnShape.FillColor = DisplayLevel.resultBtnClr;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00592}00592                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00593}00593                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (MouseEventsGame.CheckArea(loop, \textcolor{keyword}{this}) == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Area.leftButton)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00594}00594                 \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00595}00595                     resultLeftBtnShape.OutlineColor = Color.White;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00596}00596                     resultLeftBtnShape.FillColor = DisplayLevel.resultBtnClrActive;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00597}00597                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00598}00598                 \textcolor{keywordflow}{if} (MouseEventsGame.CheckArea(loop, \textcolor{keyword}{this}) != \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Area.rightButton \&\& resultRightBtnShape.OutlineColor == Color.White)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00599}00599                 \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00600}00600                     resultRightBtnShape.OutlineColor = DisplayLevel.resultBrdClr;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00601}00601                     resultRightBtnShape.FillColor = DisplayLevel.resultBtnClr;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00602}00602                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00603}00603                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (MouseEventsGame.CheckArea(loop, \textcolor{keyword}{this}) == \mbox{\hyperlink{class_projectile_1_1_level}{Level}}.Area.rightButton)}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00604}00604                 \{}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00605}00605                     resultRightBtnShape.OutlineColor = Color.White;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00606}00606                     resultRightBtnShape.FillColor = DisplayLevel.resultBtnClrActive;}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00607}00607                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00608}00608                 loop.Window.Draw(this.resultShape);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00609}00609                 \textcolor{keywordflow}{if} (!(stageNumber == 3 \&\& success))}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00610}00610                 \{   \textcolor{comment}{// prawy przycisk nie jest wyświetlany}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00611}00611                     \textcolor{comment}{// w przypadku sukcesu w ostatnim etapie}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00612}00612                     loop.Window.Draw(this.resultRightBtnShape);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00613}00613                     loop.Window.Draw(this.resultRightText);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00614}00614                 \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00615}00615                 loop.Window.Draw(this.resultLeftBtnShape);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00616}00616                 loop.Window.Draw(this.resultText);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00617}00617                 loop.Window.Draw(this.resultLeftText);}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00618}00618             \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00619}00619         \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00620}00620     \}}
+\DoxyCodeLine{\Hypertarget{_stage_8cs_source_l00621}00621 \}}
+
+\end{DoxyCode}

@@ -13,102 +13,113 @@ namespace Projectile
 
 
     public class Miniature
-    {
-        Texture texture;
-        Text text;
-        Text cpltText;
+    {   // klasa opisująca miniaturę wyświetlaną w menu
+        private Texture texture;
+        private Text text;
+        private Text cpltText;
+        private Sprite sprite;
+        private float x;
+        private float y;
+        private string name;
+        private string path;
+        private float brdThickness;
+        private Color brdColor;
+        private Color fontColor;
         public RectangleShape rectShp;
         public Ellipse ellipse;
-        public Sprite sprite;
         public bool active = false;
         public bool completed = false;
-        public float x;
-        public float y;
+        
 
         public Miniature(string ellipsetext, float x, float y, Color brdcolor, Color fillcolor, float thickness = C.DEF_BRD_THICKNESS)
-        {
-           
-            ellipse = new Ellipse(C.RST_X_RAD, C.RST_Y_RAD, x, y, brdcolor, fillcolor, Projectile.mainFont, C.RST_TEXT_SIZE, ellipsetext, DisplayMenu.DefTxtClr, thickness = C.DEF_BRD_THICKNESS);
+        {   // konstruktor dla przycisku reset
+            ellipse = new Ellipse(C.RST_X_RAD, C.RST_Y_RAD, x, y, brdcolor, fillcolor, Projectile.mainFont, C.RST_TEXT_SIZE, ellipsetext, DisplayMenu.defTxtClr);
         }
 
-        public Miniature(string name, string path, Color brdcolor, Color textcolor, float x, float y, float thickness = C.DEF_BRD_THICKNESS)
-        {
+        public Miniature(string name, string path, Color brdColor, Color fontColor, float x, float y, float thickness = C.DEF_BRD_THICKNESS)
+        {   // konstruktor do miniatury poziomu
+            this.name = name;
+            this.path = path;
             this.x = x;
             this.y = y;
-            this.LoadTexture(texture, path);
-            this.LoadBorder(rectShp, thickness, brdcolor, x, y);
-            this.LoadSprite(sprite, texture, x, y);
-            this.LoadText(C.NAME_TEXT_SIZE, name, textcolor, texture);
+            this.brdThickness = thickness;
+            this.brdColor = brdColor;
+            this.fontColor = fontColor;
+            this.LoadTexture();
+            this.LoadBorder();
+            this.LoadSprite();
+            this.LoadText();
             if (IsRect())
                 this.LoadCpltText();
         }
 
-        private void LoadTexture(Texture texture, string path)
-    {
-        this.texture = new Texture(path);
-    }
+        private void LoadTexture()
+        {   // wczytanie tekstury poziomu z podanej ścieżki
+            this.texture = new Texture(this.path);
+        }
 
-        private void LoadBorder(RectangleShape rectShp, float thickness, Color color, float x, float y)
+        private void LoadBorder()
         {
             this.rectShp = new RectangleShape()
             {
-                OutlineThickness = thickness,
-                OutlineColor = color,
+                OutlineThickness = brdThickness,
+                OutlineColor = brdColor,
                 FillColor = Color.Transparent,
                 Size = (Vector2f)texture.Size,
                 Position = new Vector2f(x, y)
             };
         }
 
-        private void LoadSprite(Sprite sprite, Texture texture, float x, float y)
-        {
+        private void LoadSprite()
+        {   // wczytanie sprite'a na podstawie wcześniej wczytanej miniatury
             this.sprite = new Sprite(texture)
-            {
+            {   // umieszczenie sprite'a w pozycji podanej przy konstruowaniu obiektu
                 Position = new Vector2f(x, y)
             };
         }
 
-        private void LoadText(uint textsize, string name, Color textcolor, Texture texture)
-        {
-            this.text = new Text(name, Projectile.mainFont, textsize);
+        private void LoadText()
+        {   // wczytanie tekstu opisującego miniaturę poziomu
+            this.text = new Text(name, Projectile.mainFont, C.NAME_TEXT_SIZE);
+            // FloatRect służy do wycentrowania tekstu dzięki znajomości wymiarów pola tekstowego
             FloatRect textRect = text.GetLocalBounds();
             text.Origin = new Vector2f(textRect.Left + textRect.Width/2, textRect.Top + textRect.Height/2);
-            text.Position = new Vector2f(x+ texture.Size.X / 2, y+25f);
-            text.Color = textcolor;
+            text.Position = new Vector2f(x+ texture.Size.X / 2, y + C.MINIATURE_TITLE_TOP_MARGIN);
+            text.FillColor = fontColor;
         }
 
         private void LoadCpltText()
-        {
+        {   // metoda wczytująca napis ukończenia poziomu
             this.cpltText = new Text("COMPLETED", Projectile.mainFont, C.CPLT_TEXT_SIZE);
+            // FloatRect służy do wycentrowania tekstu dzięki znajomości wymiarów pola tekstowego
             FloatRect textRect = cpltText.GetLocalBounds();
             cpltText.Origin = new Vector2f(textRect.Left + textRect.Width / 2, textRect.Top + textRect.Height / 2);
             cpltText.Position = new Vector2f(x + texture.Size.X / 2, y + texture.Size.Y / 2);
-            cpltText.Color = DisplayMenu.CpltBrdClr;
+            cpltText.FillColor = DisplayMenu.cpltBrdClr;
         }
 
         public void ChangeColor(Color color)
-        {
+        {   // metoda modyfikująca kolor obramowania miniatury
             this.rectShp.OutlineColor = color;
         }
 
         public bool IsRect()
-        {
+        {   // metoda zwracająca true jeśli obiekt jest miniaturą poziomu
             if (rectShp != null)
                 return true;
             return false;
         }
 
         public void Draw(Loop loop)
-        {
-
+        {   // metoda wyświetlająca elementy miniatury
             if (this.IsRect())
-            {
+            {   // dla miniatury poziomu
                 loop.Window.Draw(this.sprite);
                 loop.Window.Draw(this.rectShp);
                 if (this.completed)
                     loop.Window.Draw(this.cpltText);
             }
-            else
+            else // dla przycisku reset
                 ellipse.DrawEllipse(loop);
             if (this.text != null)
                 loop.Window.Draw(this.text);

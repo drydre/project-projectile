@@ -12,24 +12,24 @@ namespace Projectile
         private float _speed = 1f;
 
         public float Speed
-        {
+        {   // pole skalowania upływu czasu
             get { return _speed; }
             set { _speed = value; }
         }
 
         public float Delta
-        {
+        {   // pole upływu czasu pomiędzy klatkami
             get { return _delta * _speed; }
             set { _delta = value; }
         }
 
-        public float DeltaNormalSpeed
-        {
+        public float DeltaUnscaled
+        {   // pole nieskalowanego upływu czasu pomiędzy klatkami
             get { return _delta; }
         }
 
         public float TotalTime
-        {
+        {   // pole czasu od uruchomienia programu
             get;
             private set;
         }
@@ -39,7 +39,7 @@ namespace Projectile
         }
 
         public void SetValue(float delta, float totalTime)
-        {
+        {   // metoda pozwalająca odświeżyć deltę i całkowity upływ czasu
             _delta = delta;
             TotalTime = totalTime;
         }

@@ -11,7 +11,8 @@ using SFML.Window;
 namespace Projectile
 {
     public class Physics
-    {
+    {   // klasa przechowująca metody symulujące fizykę w grze
+        // w oparciu o przyjęte wcześniej założenia
         public Clock clock;
         double V0x;
         double V0y;
@@ -49,7 +50,8 @@ namespace Projectile
         }
 
         public float UpdateVelocity()
-        {
+        {   // metoda zwracająca prędkość pocisku
+            // wyświetlaną w trakcie jego lotu
             float t = clock.ElapsedTime.AsSeconds();
             double Vy = V0y - g * t;
             float v = (float)Math.Sqrt(Math.Pow(V0x, 2) + Math.Pow(Vy, 2));
@@ -57,13 +59,20 @@ namespace Projectile
         }
 
         public double GetV0(float E, float m)
-        {
+        {   // metoda zwracająca prędkość początkową
+            // pocisku, która jest następnie rozkładana
+            // na składowe poziomą i pionową
             double V0 = Math.Sqrt(2 * E / m)*C.DISTANCE_SCALE;
             return V0;
         }
 
         public float GetEnergy(float stringK, float stretch)
-        {
+        {   // metoda zwracająca energię kinetyczną, którą
+            // będzie miał pocisk opuszczający procę
+            // MIMO ZASTOSOWANIA POJĘCIA STAŁEJ SPRĘŻYSTOŚCI K
+            // NIE ODPOWIADA ONA ENERGII POTENCJALNEJ SPRĘŻYSTOŚCI
+            // PONIEWAŻ NIE UWZGLĘDNIA STRAT W GUMIE I ENERGII
+            // POTRZEBNEJ DO UNIESIENIA POCISKU DO PUNKTU WYLOTU
             float energy = (float)(stringK * Math.Pow(stretch/C.DISTANCE_SCALE, 2) / 2);
             return energy;
         }

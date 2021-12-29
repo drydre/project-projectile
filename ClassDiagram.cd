@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Projectile.DisplayInfo">
-    <Position X="15" Y="14.5" Width="2" />
+    <Position X="3.5" Y="14.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAg=</HashCode>
       <FileName>DisplayInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Projectile.DisplayLevel">
-    <Position X="14.75" Y="4.75" Width="2.25" />
+    <Position X="14.75" Y="4.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>CAAAAAACAQAAAABAAAAIChABAAAAgUAAAIAAQAAEAgA=</HashCode>
+      <HashCode>CAIACAAAAQAAAABAAAAIQhABQAAAAQAAAIAAQBBEAgA=</HashCode>
       <FileName>DisplayLevel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -28,7 +28,7 @@
     </NestedTypes>
     <AssociationLine Name="minMars" Type="Projectile.Miniature" ManuallyRouted="true" FixedFromPoint="true">
       <Path>
-        <Point X="6.25" Y="8.598" />
+        <Point X="6.25" Y="8.983" />
         <Point X="6.25" Y="10" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
@@ -37,7 +37,7 @@
     </AssociationLine>
     <AssociationLine Name="minEarth" Type="Projectile.Miniature" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7" Y="8.598" />
+        <Point X="7" Y="8.983" />
         <Point X="7" Y="9.299" />
         <Point X="7" Y="9.299" />
         <Point X="7" Y="10" />
@@ -48,7 +48,7 @@
     </AssociationLine>
     <AssociationLine Name="minKepler" Type="Projectile.Miniature" FixedFromPoint="true">
       <Path>
-        <Point X="6.75" Y="8.598" />
+        <Point X="6.75" Y="8.983" />
         <Point X="6.75" Y="10" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
@@ -57,7 +57,7 @@
     </AssociationLine>
     <AssociationLine Name="minMoon" Type="Projectile.Miniature" FixedFromPoint="true">
       <Path>
-        <Point X="6.5" Y="8.598" />
+        <Point X="6.5" Y="8.983" />
         <Point X="6.5" Y="10" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
@@ -65,7 +65,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AACgAAACQAAAIAAAAAEEIIAAAABEAAAAAAQCAEIAAAI=</HashCode>
+      <HashCode>AACgAAAAAABAIAgCAAQEIIABQAQEAIAgAAACAEIAAAA=</HashCode>
       <FileName>DisplayMenu.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -76,16 +76,16 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Projectile.Ellipse">
-    <Position X="14.75" Y="10.5" Width="2.25" />
+    <Position X="14.75" Y="11.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAIAQAAAAAAAAAIAAAAAgQAAAAAAAAAIAAAAAIAAAIA=</HashCode>
+      <HashCode>AAIAQAAAAAAMAAIAAAAAiQAgAAAEAAAJCABgAIgAAIA=</HashCode>
       <FileName>Ellipse.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Projectile.Frames">
     <Position X="3.5" Y="9.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>QAAAgAAAAAAAggAAAAAAAAABAAAAAAEABAAAAAAAAAA=</HashCode>
+      <HashCode>QBAAgAAAAAAAAgAAAAAAAAABAAAAAAEABAAAAAAAAAA=</HashCode>
       <FileName>Frames.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -107,7 +107,7 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>ATIABEhACASQIggAAIIAJCAoIABmGABYSQAGDEAgIAE=</HashCode>
+      <HashCode>ATIBBEhACACQIggAAIIAJCAoIABuGIBYSQAGDEAoYIA=</HashCode>
       <FileName>Level.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -118,7 +118,7 @@
   <Class Name="Projectile.Loop">
     <Position X="3.5" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAIAAAAAwAAAAAAABAUAAEAAAAAIAAECAEgAEM=</HashCode>
+      <HashCode>AAAAgAAIAAAAAgAAAAAAABAEAAEAAAAAIAAACAAgAEM=</HashCode>
       <FileName>Loop.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -129,14 +129,14 @@
     <Position X="6" Y="10" Width="2.25" />
     <AssociationLine Name="ellipse" Type="Projectile.Ellipse" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.188" Y="14.632" />
-        <Point X="7.188" Y="14.726" />
-        <Point X="15.75" Y="14.726" />
-        <Point X="15.75" Y="13.401" />
+        <Point X="7.188" Y="15.594" />
+        <Point X="7.188" Y="16.642" />
+        <Point X="15.75" Y="16.642" />
+        <Point X="15.75" Y="16.266" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAIEAAAACgCAQgAACACAAAAEABAAQgAIAABgIAAAAAA=</HashCode>
+      <HashCode>AAIEAAAACgCAQgAACACCAAAEABAEQgAJAABgIAgAAAA=</HashCode>
       <FileName>Miniature.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -144,14 +144,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Projectile.MouseEventsGame">
-    <Position X="14.75" Y="8.75" Width="2.25" />
+    <Position X="14.75" Y="9.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AgAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MouseEventsGame.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Projectile.MouseEventsMenu">
-    <Position X="6" Y="14.25" Width="2.25" />
+    <Position X="8.75" Y="15" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MouseEventsMenu.cs</FileName>
@@ -181,7 +181,7 @@
   <Class Name="Projectile.Projectile">
     <Position X="3.5" Y="6" Width="2" />
     <TypeIdentifier>
-      <HashCode>AACAgAAAABAAA0AAAAAAAAAAAAAAAAAAAQAAAAAAAAg=</HashCode>
+      <HashCode>AACAgAAAABAAAkAAAAAAAAAAAAAAAAgAAAAAAAAAAAg=</HashCode>
       <FileName>Projectile.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -190,13 +190,12 @@
     <Members>
       <Field Name="clockRun" Hidden="true" />
       <Field Name="length" Hidden="true" />
-      <Field Name="startPos" Hidden="true" />
       <Field Name="str_prev" Hidden="true" />
       <Field Name="success" Hidden="true" />
       <Field Name="t_prev" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>JIMDDQ2CDEFEQgScgMACIFFBBQgQBBMIARUWICB6oQI=</HashCode>
+      <HashCode>JIMDDQ2CDEFEQgScgNACKFFBBQgQBBMIARUWIAB6oQI=</HashCode>
       <FileName>Stage.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -209,7 +208,7 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>YAYavcioFOiQmBJBmeQEgRIRdBxJJgKpQEZkCJVJriQ=</HashCode>
+      <HashCode>YA4evcioFOiQmBJBmeQEgRIRdBxJJgapQEZkCJVJriU=</HashCode>
       <FileName>C.cs</FileName>
     </TypeIdentifier>
   </Class>

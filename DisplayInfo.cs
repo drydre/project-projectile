@@ -11,7 +11,10 @@ using SFML.Window;
 namespace Projectile
 {
     public static class DisplayInfo
-    {
+    {   // klasa stworzona jedynie na potrzeby diagnostyki
+        // w obecnej formie pozwala wyświetlać ilość klatek
+        // na sekundę, czas liczony od uruchomienia programu
+        // oraz dane autora
         public static Font infoFont;
 
         public static void LoadFont()
@@ -19,25 +22,33 @@ namespace Projectile
             infoFont = new Font(C.INFO_FONT_PATH);
         }
 
-        
-
         public static void DrawInfo(Loop loop, Color fontColor)
         {
             if (infoFont == null)
-              return;
+                return;
             string totalTimeString = loop.Frames.TotalTime.ToString("0.000");
             string deltaString = loop.Frames.Delta.ToString("0.000");
-            float fps = 1f/loop.Frames.Delta;
+            float fps = 1f / loop.Frames.Delta;
             string fpsString = fps.ToString("0.000");
-            Text txtTime = new Text(totalTimeString, infoFont, 16);
-            txtTime.Position = new Vector2f(15f, 5f);
-            txtTime.Color = fontColor;
+            /*Text txtTime = new Text(totalTimeString, infoFont, 16)
+            {
+                Position = new Vector2f(15f, 5f),
+                FillColor = fontColor
+            };*/
 
-            Text txtFPS = new Text(fpsString, infoFont, 16);
-            txtFPS.Position = new Vector2f(15f, 25f);
-            txtFPS.Color = fontColor;
-            loop.Window.Draw(txtTime);
-            loop.Window.Draw(txtFPS);
+            /*Text txtFPS = new Text(fpsString, infoFont, 16)
+            {
+                Position = new Vector2f(15f, 25f),
+                FillColor = fontColor
+            };*/
+
+            Text txtAuthor = new Text(C.AUTHOR_INFO, infoFont, 16);
+            FloatRect txtRect = txtAuthor.GetLocalBounds();
+            txtAuthor.Position = new Vector2f(C.DEFAULT_WIDTH - txtRect.Width - 5f, C.DEFAULT_HEIGHT - txtRect.Height - 8f);
+            txtAuthor.FillColor = fontColor;
+            //loop.Window.Draw(txtTime);
+            //loop.Window.Draw(txtFPS);
+            loop.Window.Draw(txtAuthor);
         }
     }
 

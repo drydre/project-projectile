@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Projectile
 {
     class Progress
-    {
+    {   // klasa przechowująca metody zapisu, odczytu i resetu postępu
 
         public static void SaveProgress(Int16 level)
         {

@@ -11,40 +11,40 @@ using SFML.Window;
 namespace Projectile
 {
     public class Projectile : Loop
-    {
+    {   // klasa dziedzicząca po Loop
         public static Font mainFont;
         public static Font theoryFont;
-        public static Color Bgcolor = new Color(187, 247, 143, 255);
+        public static Color backgroundColor = new Color(187, 247, 143, 255);
         public static Color MainFontColor = new Color(112, 73, 0, 255);
 
-        public Projectile() : base(C.DEFAULT_WIDTH, C.DEFAULT_HEIGHT, C.DEFAULT_TITLE, Bgcolor) { }
+        // w konstruktorze ustalono rozdzielczość okna, tytuł oraz kolor po wyczyszczeniu
+        public Projectile() : base(C.DEFAULT_WIDTH, C.DEFAULT_HEIGHT, C.DEFAULT_TITLE, backgroundColor) { }
         public static void LoadFont()
-        {
+        {   // wczytanie czcionek używanych w programie
             mainFont = new Font(C.MAINFONT_PATH);
             theoryFont = new Font(C.THEORY_FONT_PATH);
         }
 
         public override void Load() 
-        {
-            DisplayInfo.LoadFont();
+        {   // dane wczytywane jednorazowo po uruchomieniu
             LoadFont();
-            DisplayMenu.LoadMiniature();
+            DisplayInfo.LoadFont();
+            DisplayMenu.LoadMenu();
             Progress.LoadProgress();
-            
         }
-        public override void Initialize() { }
+
         public override void SetValue(Frames frames) 
-        {
+        {   // odświeżenie obliczeń w grze
             if (displaying != 0)
                 level.UpdateLevel(this);
         }
         public override void Draw(Frames frames) 
-        {
+        {   // ustawienie elementów w oknie po odświeżeniu danych
             if (displaying == 0)
-            {
-                DisplayMenu.DrawMenu(this, MainFontColor);
+            {   // dla menu
+                DisplayMenu.DrawMenu(this);
             }     
-            else
+            else // dla poziomu
                 level.Draw(this);
             DisplayInfo.DrawInfo(this, Color.Red);
         }
