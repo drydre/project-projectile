@@ -10,61 +10,123 @@ using SFML.Window;
 
 namespace Projectile
 {
+
+    /** Klasa odpowiadająca za wygląd i charakterystykę etapu na danym poziomie.*/
     class Stage
-    {   // klasa odpowiadająca za wygląd i charakterystykę etapu na danym poziomie
+    {   
+        /** zegar użyteczny w przyspieszaniu pocisku*/
         private Clock clock;
+        /** kształt pocisku*/
         private CircleShape projectileShape;
+        /** tekstura procy*/
         private Texture slingTexture;
+        /** sprite procy*/
         private Sprite slingSprite;
+        /** tekstura celu*/
         private Texture targetTexture;
+        /** sprite celu*/
         private Sprite targetSprite;
+        /** kształt platformy procy*/
         private RectangleShape slingshotPlatformShape;
+        /** ksztalt platformy celu*/
         private RectangleShape targetPlatformShape;
+        /** kszałt lewej połowy cięciwy*/
         private RectangleShape stringLeftShape;
+        /** kształt prawej połowy cięciwy*/
         private RectangleShape stringRightShape;
+        /** kszałt planszy wyniku*/
         private RectangleShape resultShape;
+        /** kształt prawego przycisku planszy wyniku*/
         private RectangleShape resultRightBtnShape;
+        /** kształt lewego przycisku planszy wyniku*/
         private RectangleShape resultLeftBtnShape;
+        /** tekst wyniku*/
         private Text resultText;
+        /** tekst prawego przycisku wyniku*/
         private Text resultRightText;
+        /** tekst lewego przycisku wyniku*/
         private Text resultLeftText;
+        /** tekst stałych etapu*/
         private Text constText;
+        /** tekst numeru etapu*/
         private Text stageText;
+        /** tekst danych o strzale*/
         private Text shotText;
+        /** tekst danych o locie*/
         private Text flightText;
+        /** kolor tekstu głównego*/
         private Color textColor;
+        /** kolor tekstu danych o strzale*/
         private Color shotTextcolor;
+        /** numer etapu*/
         public uint stageNumber;
+        /** wysokosc platformy procy*/
         private int slingshotPlatformHeight;
+        /** wysokosc platformy celu*/
         private int targetPlatformHeight;
+        /** wynik strzału -1 - porażka, 0 - brak wyniku, 1 - sukces*/
         public int updatedResult = 0;
+        /** czas do równania różnicowego powrotu cięciwy*/
         private float t_prev = -1;
+        /** położenie procy w poziomie*/
         private float slingshotX;
+        /** położenie procy w pionie*/
         private float slingshotY;
+        /** położenie celu w poziomie*/
         private float targetX;
+        /** położenie celu w pionie*/
         private float targetY;
+        /** punkt zerowy powierzchni*/
         private float baseAlt;
+        /** limit rozciągania cięciwy*/
         private float stringLimit;
+        /** długość rozciągniętej cięciwy początkowa*/
         private float length;
+        /** długość rozciągniętej cięciwy aktualizowana*/
         private float stretch;
+        /** długość cięciwy przed aktualizacją*/
         private float str_prev;
+        /** kąt wystrzału względem ziemi*/
         private float angle;
+        /** pseudo-stała sprężystości cięciwy*/
         private float stringK;
+        /** masa pocisku*/
         private float mass;
+        /** przyspieszenie grawitacyjne*/
         private float g;
+        /** początkowa energia kinetyczna wystrzału*/
         public float energy;
+        /** prędkość pocisku*/
         public float velocity;
+        /** energia przy maksymalnym naciągu*/
         public float maxEnergy;
+        /** napis główny wyniku*/
         private string mainResultString;
+        /** napis na lewym przycisku wyniku*/
         private string leftResultString;
+        /** napis na prawym przycisku wyniku*/
         private string rightResultString;
+        /** flaga włączenia zegara*/
         private bool clockRun = false;
+        /** flaga sukcesu*/
         public bool success = false;
+        /** fizyka lotu pocisku*/
         public Physics physics = new Physics();
+        /** losowanie stałych etapu*/
         private Random random = new Random();
 
+        /**
+         * Konstruktor etapu losowo generuje zmienne wysokości platform, maksymalnej energii strzału etc.
+         * @param stageNumber numer etapu
+         * @param slingshotX położenie procy w poziomie
+         * @param targetX położenie celu w poziomie
+         * @param g przyspieszenie grawitacyjne
+         * @param baseAlt punkt zerowy powierzchni
+         * @param StageFontColor kolor przypisany do etapu
+         * @param ShotFontColor kolor przypiany do danych strzału
+         */
         public Stage(uint stageNumber, float slingshotX, float targetX, float g, float baseAlt, Color StageFontColor, Color ShotFontColor)
-        {   // konstruktor etapu losowo generuje zmienne wysokości platform, maksymalnej energii strzału etc.
+        {   
             this.textColor = StageFontColor;
             this.shotTextcolor = ShotFontColor;
             this.stageNumber = stageNumber;
@@ -90,9 +152,9 @@ namespace Projectile
             this.LoadResult(false);
         }
 
-
+        /** metoda wczytująca procę z pliku graficznego*/
         private void LoadSlingshot()
-        {   // metoda wczytująca procę z pliku graficznego
+        {   
             this.slingTexture = new Texture(C.SLINGSHOT_PATH);
             this.slingSprite = new Sprite(slingTexture)
             {   // punkt origin odnosi się do położenia pocisku (w środku cięciwy)
@@ -102,8 +164,9 @@ namespace Projectile
             };
         }
 
+        /** metoda wczytująca cel z pliku graficznego*/
         private void LoadTarget()
-        {   // metoda wczytująca cel z pliku graficznego
+        {   
             this.targetTexture = new Texture(C.TARGET_PATH);
             this.targetSprite = new Sprite(targetTexture)
             {
@@ -111,8 +174,9 @@ namespace Projectile
             };
         }
 
+        /** metoda wczytująca kształt pocisku*/
         private void LoadProjectile()
-        {   // metoda wczytująca kształt pocisku
+        {   
             this.projectileShape = new CircleShape(C.PROJECTILE_RAD)
             {
                 OutlineThickness = C.PROJ_BRD_THICKNESS,
@@ -123,9 +187,12 @@ namespace Projectile
             };
         }
 
+        /**
+         * metoda wczytująca napis pod nazwą poziomu
+         * informującego o aktualnie rozgrywanym etapie
+         */
         private void LoadStageNumber()
-        {   // metoda wczytująca napis pod nazwą poziomu
-            // informujący o aktualnie rozgrywanym etapie
+        {   
             this.stageText = new Text($"Stage {stageNumber}/3", Projectile.mainFont, C.STAGE_NUM_TEXT_SIZE);
             FloatRect textRect = stageText.GetLocalBounds();
             stageText.Origin = new Vector2f(textRect.Left + textRect.Width / 2, textRect.Top + textRect.Height / 2);
@@ -134,10 +201,12 @@ namespace Projectile
         }
 
 
-
+        /**
+         * metoda wczytująca kształty platform, na których
+         * w etapach 2 i 3 umieszczone są proca i cel
+         */
         private void LoadPlatforms()
-        {   // metoda wczytująca kształty platform, na których
-            // w etapach 2 i 3 umieszczone są proca i cel
+        {   
             Vector2f slingshotPlatformSize = new Vector2f(C.SLINGSHOT_PLATFORM_WIDTH, this.slingshotPlatformHeight);
             this.slingshotPlatformShape = new RectangleShape(slingshotPlatformSize)
             {   // środek platformy znajduje się pod środkiem obiektu, który podtrzymuje
@@ -154,9 +223,12 @@ namespace Projectile
             };
         }
 
+        /**
+         * metoda wczytująca kształt cięciwy procy
+         * jako dwie jej połowy zaczepione do odpowiednich ramion
+         */
         private void LoadString()
-        {   // metoda wczytująca kształt cięciwy procy
-            // jako dwie jej połowy zaczepione do odpowiednich ramion
+        {   
             Vector2f stringSize = new Vector2f(slingTexture.Size.X / 2 - C.STRING_DISTANCE, C.STRING_THICKNESS);
             this.stringLeftShape = new RectangleShape(stringSize)
             {
@@ -173,8 +245,9 @@ namespace Projectile
             };
         }
 
+        /** metoda wczytująca stałe wylosowane wraz z utworzeniem obiektu etapu*/
         private void LoadConst()
-        {   // metoda wczytująca stałe wylosowane wraz z utworzeniem obiektu etapu
+        {   
             string constTextString = $"X distance:\t{(targetX - slingshotX) / C.DISTANCE_SCALE} m\n" +        
                                $"Slingshot\'s altitude:\t{(C.DEFAULT_HEIGHT-slingshotY-baseAlt-slingTexture.Size.Y) / C.DISTANCE_SCALE} m\n" +
                                $"Target\'s altitude:\t{(C.DEFAULT_HEIGHT - targetY - baseAlt - targetTexture.Size.Y) / C.DISTANCE_SCALE} m\n" +
@@ -189,9 +262,12 @@ namespace Projectile
             constText.FillColor = textColor;
         }
 
+        /**
+         * metoda odświeżająca informacje o aktualnym położeniu pocisku
+         * oraz prędkości, z jaką się porusza
+         */
         private void UpdateFlightData()
-        {   // metoda odświeżająca informacje o aktualnym położeniu pocisku
-            // oraz prędkości, z jaką się porusza
+        {   
             Vector2f coords = physics.UpdateCoords();
             velocity = physics.UpdateVelocity();
             string flightTextString = $"X position:\t{(coords.X-slingshotX)/ C.DISTANCE_SCALE} m\n" +
@@ -202,10 +278,13 @@ namespace Projectile
             flightText.FillColor = textColor;
         }
 
+        /**
+         * metoda odświeżająca informacje o kącie nachylenia
+         * oraz energii kinetycznej, jaką otrzyma pocisk w momencie
+         * puszczenia cięciwy procy w danym momencie
+         */
         private void UpdateShotData()
-        {   // metoda odświeżająca informacje o kącie nachylenia
-            // oraz energii kinetycznej, jaką otrzyma pocisk w momencie
-            // puszczenia cięciwy procy w danym momencie
+        { 
             string shotTextString = $"Energy:\t{energy} J\n" +
                                     $"Angle:\t{-angle*180 / (float)Math.PI}\u00B0\n";
             this.shotText = new Text(shotTextString, Projectile.mainFont, C.SHOT_TEXT_SIZE);
@@ -213,9 +292,13 @@ namespace Projectile
             shotText.FillColor = shotTextcolor;
         }
 
+        /**
+         * metoda obliczająca długości i kąty nachylenia prostokątów tworzących cięciwę
+         * tak, aby podążały za ruchami myszki
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public void UpdateString(Loop loop)
-        {   // w klasie obliczane są długości i kąty nachylenia prostokątów tworzących cięciwę
-            // tak, aby podążały za ruchami myszki
+        {  
             Vector2i mousePos = Mouse.GetPosition(loop.Window);
             float length = (float)Math.Sqrt(Math.Pow(slingshotX - mousePos.X, 2) + Math.Pow(slingshotY - mousePos.Y, 2));
             float alpha = (float)Math.Asin((slingshotY - mousePos.Y) / length);
@@ -257,8 +340,9 @@ namespace Projectile
             projectileShape.Position = (Vector2f)mousePos;
         }
 
+        /**  metoda generująca wysokości platform odpowiednich dla aktualnego etapu*/
         private void CreatePlatforms()
-        {   // generowanie wysokości platform odpowiednich dla aktualnego etapu
+        {   
             switch (stageNumber)
             {
                 case 1:
@@ -284,9 +368,12 @@ namespace Projectile
             } 
         }
 
+        /**
+         * metoda generująca masę pocisku oraz pseudo-stałą sprężystości gumy
+         * (nie odpowiada jej ona dokładnie w fizycznym znaczeniu ale pomaga w dalszych obliczeniach)
+         */
         private void GenerateConsts()
-        {   // metoda generująca masę pocisku oraz pseudo-stałą sprężystości gumy
-            // (nie odpowiada jej ona dokładnie w fizycznym znaczeniu ale pomaga w dalszych obliczeniach)
+        {   
             this.mass = (random.Next(9)) / 2f + 1;
             do
             {   // dla skrajnych warunków k=~550, dodane zostało 100 dla zapasu dla
@@ -295,11 +382,14 @@ namespace Projectile
             } while (!CheckK());
         }
 
+        /**
+         * metoda sprawdzająca czy przy wylosowanym K oddanie strzału nie będzie trywialne
+         * (przy kącie <15 st. względem linii proca-pocisk pocisk na pewno nie doleci)
+         * oraz czy dla nachylenia co najmniej 45 st. względem linii proca-pocisk
+         * trafienie jest możliwe (granice 15 i 45 st. możliwe do regulacji przez stałe)
+         */
         private bool CheckK()
-        {   // metoda sprawdzająca czy przy wylosowanym K oddanie strzału nie będzie trywialne
-            // (przy kącie <15 st. względem linii proca-pocisk pocisk na pewno nie doleci)
-            // oraz czy dla nachylenia co najmniej 45 st. względem linii proca-pocisk
-            // trafienie jest możliwe (granice 15 i 45 st. możliwe do regulacji przez stałe)
+        {   
             float diffAngle = (float)Math.Atan2((int)(targetPlatformHeight - slingshotPlatformHeight - slingTexture.Size.Y + targetTexture.Size.Y), (int)(targetX - slingshotX));
             float checkLowAngle = diffAngle + C.ANGLE_CUTOFF * (float)Math.PI / 180;
             float checkHighAngle = diffAngle + C.ANGLE_SAFE_K * (float)Math.PI / 180; 
@@ -316,9 +406,13 @@ namespace Projectile
                 return true;
         }
 
+        /**
+         * metoda obliczająca położenie cięciwy zaraz po oddaniu strzału
+         * zanim pocisk zacznie opuszczać procę
+         * @param dt czas od odświeżenia
+         */
         private void ReturnString(float dt)
-        {   // metoda obliczająca położenie cięciwy zaraz po oddaniu strzału
-            // zanim pocisk zacznie opuszczać procę
+        {   
             // poniższy wzór to przybliżona różniczka zmiany naciągu po czasie - równanie różnicowe
             // wyprowadzone z energii kx2^2/2 - kx1^2/2 = mv^2/2, gdzie v = ds/dt, a x1, x2 to naciągi w punkcie początkowym i aktualnym
             // widać tu uproszczenie kx^2/2 nie jest energią naciągu, ponieważ pominięta zostaje strata na uniesienie
@@ -350,8 +444,9 @@ namespace Projectile
             projectileShape.Position = projectilePos;
         }
 
+        /** metoda sprawdzająca czy środek pocisku znajduje się w obszarze celu*/
         private int CheckHit()
-        {   // metoda sprawdzająca czy środek pocisku znajduje się w obszarze celu
+        {   
             Vector2f projectilePosition = projectileShape.Position;
             Vector2f targetSize = (Vector2f)targetTexture.Size;
             if (projectilePosition.X >= targetSprite.Position.X && projectilePosition.X <= targetSprite.Position.X + targetSize.X &&
@@ -375,11 +470,15 @@ namespace Projectile
                 return 0;
         }
 
+        /**
+         * metoda wczytująca wynik strzału
+         * jest rozbudowana ze względu na różne możliwe
+         * do uzyskania rezultaty, w zależności od numeru poziomu
+         * i sukcesu bądź porażki
+         * @param wynik strzału
+         */
         private void LoadResult(bool result)
-        {   // metoda wczytująca wynik strzału
-            // jest rozbudowana ze względu na różne możliwe
-            // do uzyskania rezultaty w zależności od numeru poziomu
-            // i sukcesu bądź porażki
+        {   
             Vector2f resultSize = new Vector2f(C.RESULT_WIDTH, C.RESULT_HEIGHT);
             Vector2f resultBtnSize = new Vector2f(C.RESULT_BTN_WIDTH, C.RESULT_BTN_HEIGHT);
             this.resultShape = new RectangleShape(resultSize)
@@ -444,33 +543,44 @@ namespace Projectile
             }
         }
 
+        /** 
+         * metoda zwracania koordynatów lewego przycisku w trakcie
+         * wyświetlania wyniku (może być po lewej lub na środku)
+         */
         public Vector2f GetLeftButtonCoords()
-        {   // zwracanie koordynatów lewego przycisku w trakcie
-            // wyświetlania wyniku (może być po lewej lub na środku)
+        {   
             Vector2f btnCoords = new Vector2f(resultLeftBtnShape.Position.X, resultLeftBtnShape.Position.Y);
             return btnCoords;
         }
+        /**
+         * metoda zwracania koordynatów prawego przycisku w trakcie
+         * wyświetlania wyniku (może nie być zdefiniowany)
+         */
         public Vector2f GetRightButtonCoords()
-        {   // zwracanie koordynatów prawego przycisku w trakcie
-            // wyświetlania wyniku (może nie być zdefiniowany)
+        {
             Vector2f btnCoords = new Vector2f(resultRightBtnShape.Position.X, resultRightBtnShape.Position.Y);
             return btnCoords;
         }
 
+        /** metoda zwracania koordynatów procy (program umożliwia zmianę jej położenia)*/
         public Vector2f GetSlingshotCoords()
-        {   // zwracanie koordynatów procy (program umożliwia zmianę jej położenia)
+        {   
             Vector2f slingshotCoords = new Vector2f(slingshotX, slingshotY);
             return slingshotCoords;
         }
-
+        /** metoda zwracania koordynatów pocisku (zmienia położenie w trakcie celowania)*/
         public Vector2f GetProjectileCoords()
-        {   // zwracanie koordynatów pocisku (zmienia położenie w trakcie celowania)
+        {   
             Vector2f projectileCoords = new Vector2f(projectileShape.Position.X, projectileShape.Position.Y);
             return projectileCoords;
         }
 
+        /**
+         * metoda ustawiająca napisy w zależności od wyniku strzału
+         * @param result wynik strzału
+         */
         private void SetResultStrings(bool result)
-        {   // metoda ustawiająca napisy w zależności od wyniku strzału
+        {   
             if (result && stageNumber == 3)
             {   // sukces - ostatni etap
                 this.mainResultString = C.SUCCESS_LAST_MAIN;
@@ -491,11 +601,16 @@ namespace Projectile
             }
         }
 
+        /**
+         * metoda odświeżania danych kolejnego cyklu przez wykonanie obliczeń
+         * charakterystycznych do procesu, który jest aktualnie wykonywany
+         * w trakcie rozgrywki, metoda wykonuje różne obliczenia w zależności
+         * od zmiennej activity
+         * @param activity aktualnie wykonywana czynność
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public void UpdateStage(ref Level.Action activity, Loop loop)
-        {   // odświeżanie danych kolejnego cyklu przez wykonanie obliczeń
-            // charakterystycznych do procesu, który jest aktualnie wykonywany
-            // w trakcie rozgrywki, metoda wykonuje różne obliczenia w zależności
-            // od zmiennej activity
+        {   
             if (activity == Level.Action.result)
             {   // w przypadku czynności wyświetlania rezultatu wczytaj
                 // go z odpowiednimi danymi
@@ -561,8 +676,13 @@ namespace Projectile
   
         }
 
+        /**
+         * metoda umieszczająca w oknie elementy etapu
+         * @param activity aktualnie wykonywana czynność
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public void Draw(Level.Action activity, Loop loop)
-        {   // umieść w oknie elementy etapu
+        {   
             if (activity != Level.Action.theory)
             {   // chowanie stałych i napisu podczas
                 // wyświetlania planszy teorii

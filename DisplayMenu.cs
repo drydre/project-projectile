@@ -10,26 +10,43 @@ using SFML.Window;
 
 namespace Projectile
 {
+    /** Klasa statyczna zawierająca metody obsługujące funkcje tworzenia i wyświetlania menu.*/
     public class DisplayMenu
-    {   // klasa statyczna zawierająca metody obsługujące funkcje tworzenia i wyświetlania menu
+    {   
+        /** bufor dźwięku kliknięcia*/
         private static SoundBuffer clickBuffer = new SoundBuffer(C.CLICK_SOUND_PATH);
+        /** dźwięk klikniecia*/
         private static Sound click = new Sound(clickBuffer);
+        /** domyślny kolor obramowania*/
         public static Color defBrdClr = new Color(112, 73, 0, 255);
+        /** kolor obramowania po ukończeniu*/
         public static Color cpltBrdClr = new Color(77, 181, 0, 255);
+        /** domyślny kolor tekstu*/
         public static Color defTxtClr = new Color(112, 73, 0, 255);
+        /** rozjaśnienie miniatury po uaktywnieniu*/
         public static Color activeFillClr = new Color(255, 255, 255, 50);
+        /** kolor przycisku resetu*/
         public static Color rstClr = new Color(123, 224, 76, 255);
+        /** kolor aktywnego przycisku resetu*/
         public static Color activeRstClr = new Color(227, 230, 57, 255);
+        /** tekst tytułowy*/
         private static Text titleText;
+        /** lista miniatur*/
         public static List<Miniature> miniatures = new List<Miniature>();
+        /** miniatura Marsa*/
         private static Miniature minMars;
+        /** miniatura Ziemi*/
         private static Miniature minEarth;
+        /** miniatura Keplera*/
         private static Miniature minKepler;
+        /** miniatura Księżyca*/
         private static Miniature minMoon;
+        /** miniatura przycisku resetu*/
         private static Miniature rstBtn;
 
+        /** typ wyliczeniowy opisujący obszary w menu*/
         public enum Area
-        {   // typ wyliczeniowy opisujący obszary w menu
+        {   
             none,
             earth,
             mars,
@@ -38,8 +55,9 @@ namespace Projectile
             reset
         }
 
+        /** metoda wczytująca wszystkie elementy menu wraz z dodaniem ich do listy*/
         private static void LoadMiniature()
-        {   // wczytanie wszystkich elementów menu wraz z dodaniem ich do listy
+        {   
             minEarth = new Miniature("Earth", C.MIN_EARTH_PATH, defBrdClr, Color.Black, C.LEFT_MARGIN, C.TOP_MARGIN);
             minMars = new Miniature("Mars", C.MIN_MARS_PATH, defBrdClr, Color.Black, C.LEFT_MARGIN + C.MIN_X + C.H_SPACING, C.TOP_MARGIN);
             minMoon = new Miniature("Moon", C.MIN_MOON_PATH, defBrdClr, Color.White, C.LEFT_MARGIN, C.TOP_MARGIN + C.V_SPACING + C.MIN_Y);
@@ -52,8 +70,9 @@ namespace Projectile
             miniatures.Add(rstBtn);
         }
 
+        /** metoda wczytująca elementy menu wraz z tytułem gry*/
         public static void LoadMenu()
-        {   // wczytanie elementów menu wraz z tytułem gry
+        {   
             titleText = new Text("Project: Projectile", Projectile.mainFont, C.MAIN_TEXT_SIZE)
             {
                 Position = new Vector2f(480f, 20f),
@@ -62,9 +81,14 @@ namespace Projectile
             LoadMiniature();
         }
 
+        /**
+          * metoda sprawdzająca w jakim obszarze znajdował się kursor w trakcie kliknięcia,
+          * ustawiająca odpowiedni poziom w zależności od obszaru
+          * @param displaying opisuje wyświetlaną aktualnie zawartość ekranu
+          * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+          */
         public static void CheckClick(ref uint displaying, Loop loop)
-        {   // sprawdzenie w jakim obszarze znajdował się kursor w trakcie kliknięcia
-            // ustawienie odpowiedniego poziomu w zależności od obszaru
+        {   
             Area area = MouseEventsMenu.CheckArea(loop);
             if (area != Area.none)
             {
@@ -93,8 +117,12 @@ namespace Projectile
             }
         }
 
+        /**
+         * metoda sprawdzajaca w jakim obszarze znajduje się kursor i aktywująca podświetlenie
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         private static void CheckArea(Loop loop)
-        {   // sprawdzenie w jakim obszarze znajduje się kursor i aktywowanie podświetlenia
+        {   
             switch (MouseEventsMenu.CheckArea(loop))
             {
                 case Area.earth:
@@ -117,6 +145,10 @@ namespace Projectile
             }
         }
 
+        /**
+         * metoda ustawiająca na ekranie miniatury w odpowiednich wariantach kolorów
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public static void DrawMenu(Loop loop)
         {   // wyświelanie tytułu gry
             loop.Window.Draw(titleText);

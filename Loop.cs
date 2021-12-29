@@ -10,32 +10,50 @@ using SFML.Window;
 
 namespace Projectile
 {
+    /**
+     * klasa abstrakcyjna pętli programu obsługującej pełny cykl odświeżania
+     * obliczeń i wyświetlania wyników i elementów graficznych a także zdarzeń
+     */
     public abstract class Loop
-    {   // klasa abstrakcyjna pętli programu obsługującej pełny cykl odświeżania
-        // obliczeń i wyświetlania wyników i elementów graficznych a także zdarzeń
+    {   
+        /** 
+         * wyświetlana zawartość ekranu
+         * 0 - menu, 1 - Earth, 2 - Mars, 3 - Moon, 4 - Kepler
+         */
         public uint displaying = 0;
+        /** poziom opisywany metodą LoadLevel*/
         private protected Level level;
 
+        /** pole okna rozgrywki*/
         public RenderWindow Window 
-        {   // pole okna rozgrywki
+        {   
             get;
             protected set;
         }
 
+        /** pole kontroli czasu*/
         public Frames Frames
-        {   // pole kontroli czasu
+        {   
             get;
             protected set;
         }
 
+        /** kolor tła czystego okna RenderWindow*/
         public Color WindowClearColor
-        {   // kolor tła czystego okna RenderWindow
+        {   
             get;
             protected set;
         }
 
+        /** 
+         * Konstruktor pętli programu
+         * @param width szerokość okna
+         * @param height wysokość okna
+         * @param title tytuł okna
+         * @param kolor tła
+         */
         protected Loop (uint width, uint height, string title, Color color)
-        {   // konstruktor pętli programu
+        {   
             this.WindowClearColor = color;
             this.Window = new RenderWindow(new VideoMode(width, height), title, Styles.Titlebar|Styles.Close);
             this.Frames = new Frames();
@@ -46,19 +64,25 @@ namespace Projectile
             Window.MouseMoved += MouseMoved;
         }
 
+        /**
+         * metoda tworzenia poziomu o danym numerze (1 - Earth, 2 - Mars, 3 - Moon, 4 - Kepler)
+         * @param levelNumber numer poziomu
+         */
         private void LoadLevel(uint levelNumber)
-        {   // metoda tworzenia poziomu o danym numerze (1 - Earth, 2 - Mars, 3 - Moon, 4 - Kepler)
+        {   
             Level level = new Level(levelNumber);
             this.level = level;
         }
 
+        /** obsługa zdarzenia zamknięcia okna*/
         private void WindowClosed(object sender, EventArgs e)
-        {   // obsługa zdarzenia zamknięcia okna
+        {   
             Window.Close();
         }
 
+        /** obsługa zdarzenia puszczenia przycisku myszy*/
         private void MouseReleased(object sender, EventArgs e)
-        {   // obsługa zdarzenia puszczenia przycisku myszy
+        {   
             // obsługa dla menu
             if (displaying == 0)
             {
@@ -72,24 +96,27 @@ namespace Projectile
             }     
         }
 
+        /** obsługa zdarzenia naciśnięcia przycisku myszy w grze*/
         private void MousePressed(object sender, EventArgs e)
-        {   // obsługa zdarzenia naciśnięcia przycisku myszy w grze
+        {   
             if (displaying != 0)
             {
                 level.CheckClickDown(this);
             }
         }
 
+        /** obsługa zdarzenia poruszenia kursorem w grze*/
         private void MouseMoved(object sender, EventArgs e)
-        {   // obsługa zdarzenia poruszenia kursorem w grze
+        {   
             if (displaying != 0)
             {
                 level.CheckMove(this);
             }
         }
 
+        /** metoda realizująca cykle programu*/
         public void Run()
-        {   // metoda realizująca cykle programu
+        {   
             // jednorazowa inicjalizacja danych
             Load();
 
@@ -125,8 +152,13 @@ namespace Projectile
         }
         
         // metody abstrakcyjne uzupełnione w klasie dziedziczącej
+        /** metoda jednorazowego wczytywania danych*/
         public abstract void Load();
+
+        /** metoda odświeżania wartości obliczeń*/
         public abstract void SetValue(Frames frames);
+
+        /** metoda wyświetlania danych w oknie*/
         public abstract void Draw(Frames frames);
     }
 }

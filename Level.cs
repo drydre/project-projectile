@@ -10,52 +10,94 @@ using SFML.Window;
 
 namespace Projectile
 {
+    /**
+     * Klasa odpowiadająca za wygląd i charakterystykę danego poziomu, wewnątrz niej
+     * tworzony jest osobny obiekt Stage, który pozwala wyróżnić cechy poszczególnych etapów.
+     */
     class Level
-    {   // klasa odpowiadająca za wygląd i charakterystykę danego poziomu, wewnątrz niej
-        // tworzony jest osobny obiekt Stage, który pozwala wyróżnić cechy poszczególnych etapów
+    {   
         // wszystkie dźwięki w grze są polami przypisanymi do obiektu level
+        /** bufor dźwieku naciągania*/
         private static SoundBuffer stringBuffer = new SoundBuffer(C.STRING_SOUND_PATH);
+        /** dźwięk naciągania*/
         private static Sound stringSound = new Sound(stringBuffer);
+        /** bufor dźwięku kliknięcia*/
         public static SoundBuffer clickBuffer = new SoundBuffer(C.CLICK_SOUND_PATH);
+        /** dźwięk kliknięcia*/
         public static Sound click = new Sound(clickBuffer);
+        /** bufor dźwięku wystrzału*/
         public static SoundBuffer shotBuffer = new SoundBuffer(C.SHOT_SOUND_PATH);
+        /** dźwięk wystrzału*/
         public static Sound shot = new Sound(shotBuffer);
+        /** bufor dźwięku trafienia*/
         public static SoundBuffer hitBuffer = new SoundBuffer(C.HIT_SOUND_PATH);
+        /** dźwięk trafienia*/
         public static Sound hitSound = new Sound(hitBuffer);
+        /** bufor dźwięku uderzenia w ziemię*/
         public static SoundBuffer missBuffer = new SoundBuffer(C.MISS_SOUND_PATH);
+        /** dźwięk uderzenia w ziemię*/
         public static Sound missSound = new Sound(missBuffer);
+        /** tekstura tła*/
         private Texture bgTexture;
+        /** tekstura teorii*/
         private Texture theoryTexture;
+        /** kształt planszy teorii*/
         private RectangleShape theoryShape;
+        /** sprite tła*/
         private Sprite bgSprite;
+        /** sprite teorii*/
         private Sprite theorySprite;
+        /** tekst nazwy poziomu*/
         private Text titleText;
-        private Text theoryText;   
+        /** tekst teorii*/
+        private Text theoryText;
+        /** ścieżka dostępu do tła*/
         private string bgPath;
+        /** nazwa poziomu*/
         private string name;
+        /** aktualny etap*/
         private uint currentStage = 1;
+        /** numer odpowiadający poziomowi*/
         private uint levelNumber;
+        /** kształt przycisku teorii*/
         public Ellipse ellipse;
+        /** polozenie kursora przy naciąganiu*/
         private Vector2i mousePosMove = new Vector2i(0,0);
+        /** przyspieszenie grawitacyjne*/
         private float g;
+        /** położenie środka procy w poziomie*/
         private float slingshotX;
+        /** polożenie lewej strony celu w poziomie*/
         private float targetX;
+        /** punkt zerowy powierzchni*/
         private float baseAlt;
+        /** czy teoria jest wyświetlana*/
         public bool displayTheory = false;
+        /** etap*/
         public static Stage stage;
+        /** kolor czcionki głównej*/
         private Color fontColor;
+        /** kolor czcionki dla informacji o strzale*/
         private Color shotFontColor;
         // ponieważ każdy poziom ma inną charakterystykę, do pól przypisywane są stałe z tablic
         // na podstawie numeru poziomu
+        /** tablica położeń procy w poziomie*/
         private float[] slingshotXTab = new float[] { C.SLINGSHOT_X_EARTH, C.SLINGSHOT_X_MARS, C.SLINGSHOT_X_MOON, C.SLINGSHOT_X_KEPLER };
+        /** tablica położeń celu w poziomie*/
         private float[] targetXTab = new float[] { C.TARGET_X_EARTH, C.TARGET_X_MARS, C.TARGET_X_MOON, C.TARGET_X_KEPLER };
+        /** tablica przyspieszeń grawitacyjnych*/
         private float[] gTab = new float[] {C.G_EARTH, C.G_MARS, C.G_MOON, C.G_KEPLER};
+        /** tablica ścieżek dostępu do tła*/
         private string[] bgPathTab = new string[] { C.EARTH_PATH, C.MARS_PATH, C.MOON_PATH, C.KEPLER_PATH };
+        /** tablica punktów zerowych powierzchni*/
         private float[] baseAltTab = new float[] { C.EARTH_BASE_ALT, C.MARS_BASE_ALT, C.MOON_BASE_ALT, C.KEPLER_BASE_ALT };
+        /** tablica nazw poziomów*/
         private string[] nameTab = new string[] { "Earth", "Mars", "Moon", "Kepler 22b" };
+        /** tablica kolorów głównych czcionki*/
         private Color[] fontColorTab = new Color[] { DisplayLevel.earthFontClr, DisplayLevel.marsFontClr, DisplayLevel.moonFontClr, DisplayLevel.keplerFontClr };
+        /** tablica kolorow czcionki dla informacji o strzale*/
         private Color[] shotFontColorTab = new Color[] { DisplayLevel.earthFontClr, DisplayLevel.marsFontClr, DisplayLevel.earthFontClr, DisplayLevel.earthFontClr };
-        // typ wyliczeniowy opisujący obszary w grze
+        /** typ wyliczeniowy opisujący obszary w grze*/
         public enum Area
         {
             none,
@@ -64,7 +106,7 @@ namespace Projectile
             leftButton,
             rightButton,
         }
-        // typ wyliczeniowy opisujący zdarzenia w rozgrywce
+        /** typ wyliczeniowy opisujący zdarzenia w rozgrywce*/
         public enum Action
         {
             none,
@@ -74,11 +116,16 @@ namespace Projectile
             theory,
             result
         }
+        /** aktualne zdarzenie w grze*/
         public Action activity = Action.none;
 
+        /** 
+         * Konstruktor poziomu zawiera dostosowanie wysokości dźwięku
+         * do warunków panujących na danym poziomie.
+         * @param levelNumber numer odpowiadający poziomowi
+         */
         public Level(uint levelNumber)
-        {   // konstruktor poziomu zawiera dostosowanie wysokości dźwięku
-            // do warunków panujących na danym poziomie
+        {   
             this.levelNumber = levelNumber;
             this.baseAlt = baseAltTab[levelNumber - 1];
             this.name = nameTab[levelNumber - 1];
@@ -100,18 +147,21 @@ namespace Projectile
             this.LoadTitle();
         }
 
+        /** metoda wczytująca etap*/
         private void LoadStage()
-        {   // metoda wczytująca etap
+        {  
             stage = new Stage( currentStage, this.slingshotX, this.targetX, g, baseAlt, fontColor, shotFontColor);
         }
 
+        /** metoda wczytująca przycisk wyświetlania teorii*/
         private void LoadEllipse()
-        {   // metoda wczytująca przycisk wyświetlania teorii
+        {   
             ellipse = new Ellipse(C.THEORY_X_RAD, C.THEORY_Y_RAD, C.LEFT_THEORY_BTN_MARGIN, C.TOP_THEORY_BTN_MARGIN, DisplayLevel.theoryBrdClr, DisplayLevel.theoryFillClr, Projectile.mainFont, C.RST_TEXT_SIZE, "THEORY", DisplayLevel.theoryClr, C.DEF_BRD_THICKNESS);
         }
 
+        /** metoda wczytująca tło charakterystyczne dla danego poziomu*/
         private void LoadBackground()
-        {   // metoda wczytująca tło charakterystyczne dla danego poziomu
+        {   
             this.bgTexture = new Texture(bgPath);
             this.bgSprite = new Sprite(bgTexture)
             {
@@ -119,8 +169,9 @@ namespace Projectile
             };
         }
 
+        /** metoda wczytująca tytuł poziomu*/
         private void LoadTitle()
-        {   // metoda wczytująca tytuł poziomu
+        {   
             this.titleText = new Text(name, Projectile.mainFont, C.TITLE_TEXT_SIZE);
             FloatRect textRect = titleText.GetLocalBounds();
             titleText.Origin = new Vector2f(textRect.Left + textRect.Width / 2, textRect.Top + textRect.Height / 2);
@@ -128,8 +179,9 @@ namespace Projectile
             titleText.FillColor = fontColor;
         }
 
+        /** metoda wczytująca zawartość planszy teorii*/
         private void LoadTheory()
-        {   // metoda wczytująca zawartość planszy teorii
+        {   
             this.theoryShape = new RectangleShape()
             {
                 OutlineThickness = C.THEORY_BRD_THICKNESS,
@@ -155,8 +207,13 @@ namespace Projectile
             };
         }
 
+        /**
+         * metoda uruchamiana przy zdarzeniu zwolnienia przycisku myszy
+         * @param displaying wyświetlana zawartość ekranu
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public void CheckClickUp(ref uint displaying, Loop loop)
-        {   // metoda uruchamiana przy zdarzeniu zwolnienia przycisku myszy
+        {   
             Area area = MouseEventsGame.CheckAreaUp(this, stage, loop);
             if (area != Area.none && area != Area.projectile)
             {
@@ -209,9 +266,13 @@ namespace Projectile
             }
         }
 
+        /**
+         * metoda uruchamiana przy zdarzeniu naciśnięcia przycisku myszy,
+         * używana tylko w kontekście naciągania cięciwy procy
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public void CheckClickDown(Loop loop)
-        {   // metoda uruchamiana przy zdarzeniu naciśnięcia przycisku myszy
-            // używana tylko w kontekście naciągania cięciwy procy
+        {   
             Area area = MouseEventsGame.CheckAreaDown(stage, loop);
             if (area == Area.projectile && activity == Action.none)
             {
@@ -219,9 +280,13 @@ namespace Projectile
             }
         }
 
+        /**
+         * metoda uruchamiana przy zdarzeniu poruszenia myszą
+         * używana tylko w kontekście naciągania cięciwy procy
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public void CheckMove(Loop loop)
-        {   // metoda uruchamiana przy zdarzeniu poruszenia myszą
-            // używana tylko w kontekście naciągania cięciwy procy
+        {   
             Area area = MouseEventsGame.CheckAreaUp(this, stage, loop);
             if (area == Area.projectile && activity == Action.aiming && (float)Math.Sqrt(Math.Pow(Mouse.GetPosition(loop.Window).X-mousePosMove.X, 2) + Math.Pow(Mouse.GetPosition(loop.Window).Y-mousePosMove.Y, 2)) > 14)
             {   // po rozciągnięciu cięciwy o wartość w warunku odtwarzane jest trzeszczenie gumy
@@ -232,10 +297,14 @@ namespace Projectile
             }
         }
 
+        /**
+         * metoda odświeżająca dane kolejnego cyklu przez wykonanie obliczeń
+         * charakterystycznych do procesu, który jest aktualnie wykonywany
+         * w trakcie rozgrywki
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public void UpdateLevel(Loop loop)
-        {   // odświeżanie danych kolejnego cyklu przez wykonanie obliczeń
-            // charakterystycznych do procesu, który jest aktualnie wykonywany
-            // w trakcie rozgrywki
+        {  
             if (MouseEventsGame.CheckArea(loop) == Area.theory)
                 this.ellipse.ChangeFillColor(DisplayLevel.theoryFillClrActive);
             else
@@ -258,8 +327,12 @@ namespace Projectile
                 
         }
 
+        /**
+         * metoda umieszczająca w oknie elementy poziomu 
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public void Draw(Loop loop)
-        {   // umieść w oknie elementy poziomu
+        {   
             loop.Window.Draw(this.bgSprite);
             loop.Window.Draw(this.titleText);
             ellipse.DrawEllipse(loop);

@@ -6,40 +6,51 @@ using System.Threading.Tasks;
 
 namespace Projectile
 {
+    /** Klasa obsługująca parametry czasowe ramki.*/
     public class Frames
     {
         private float _delta = 0f;
         private float _speed = 1f;
 
+        /** pole skalowania upływu czasu*/
         public float Speed
-        {   // pole skalowania upływu czasu
+        {   
             get { return _speed; }
             set { _speed = value; }
         }
 
+        /** pole upływu czasu pomiędzy klatkami*/
         public float Delta
-        {   // pole upływu czasu pomiędzy klatkami
+        {   
             get { return _delta * _speed; }
             set { _delta = value; }
         }
 
+        /** pole nieskalowanego upływu czasu pomiędzy klatkami*/
         public float DeltaUnscaled
-        {   // pole nieskalowanego upływu czasu pomiędzy klatkami
+        {   
             get { return _delta; }
         }
 
+        /** pole czasu od uruchomienia programu*/
         public float TotalTime
-        {   // pole czasu od uruchomienia programu
+        {   
             get;
             private set;
         }
-
+        
+        /** Konstruktor domyślny*/
         public Frames()
         {
         }
 
+        /**
+         * metoda pozwalająca odświeżyć deltę i całkowity upływ czasu
+         * @param delta czas między klatkami
+         * @param całkowity czas
+         */
         public void SetValue(float delta, float totalTime)
-        {   // metoda pozwalająca odświeżyć deltę i całkowity upływ czasu
+        {   
             _delta = delta;
             TotalTime = totalTime;
         }

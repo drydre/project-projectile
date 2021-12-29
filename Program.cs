@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Projectile
 {
+    /** Klasa główna uruchamiająca pętlę programu.*/
     class Program
-    {   // klasa główna uruchamiająca pętlę programu
+    {   
         static void Main(string[] args)
         {
             Projectile projectile = new Projectile();

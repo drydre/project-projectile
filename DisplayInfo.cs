@@ -10,18 +10,27 @@ using SFML.Window;
 
 namespace Projectile
 {
+    /**
+     * Klasa stworzona jedynie na potrzeby diagnostyki,
+     * w obecnej formie pozwala wyświetlać ilość klatek
+     * na sekundę, czas liczony od uruchomienia programu
+     * oraz dane autora.
+     */
     public static class DisplayInfo
-    {   // klasa stworzona jedynie na potrzeby diagnostyki
-        // w obecnej formie pozwala wyświetlać ilość klatek
-        // na sekundę, czas liczony od uruchomienia programu
-        // oraz dane autora
+    {   
+        /** czcionka informacji*/
         public static Font infoFont;
-
+        
+        /** metoda wczytująca czcionke*/
         public static void LoadFont()
         {
             infoFont = new Font(C.INFO_FONT_PATH);
         }
 
+        /** metoda generująca dane do wyświetlenia
+          * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+          * @param fontColor kolor czcionki danych
+          */
         public static void DrawInfo(Loop loop, Color fontColor)
         {
             if (infoFont == null)

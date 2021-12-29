@@ -11,9 +11,13 @@ using SFML.Window;
 
 namespace Projectile
 {
+    /** Klasa przechowująca metody związane z położeniem kursora w menu.*/
     static class MouseEventsMenu 
-    {   // klasa przechowująca metody związane z położeniem kursora w menu
-
+    {
+        /**
+         * metoda sprawdzania połozenia kursora w obszarze menu
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public static DisplayMenu.Area CheckArea(Loop loop)
         {
             if (Mouse.GetPosition(loop.Window).X >= C.LEFT_MARGIN && Mouse.GetPosition(loop.Window).X <= C.LEFT_MARGIN + C.MIN_X)

@@ -10,13 +10,23 @@ using SFML.Window;
 
 namespace Projectile
 {
+    /**
+     * Klasa przechowująca metody związane z położeniem kursora w grze
+     * obszary zostały rozdzielone na osobne metody ze względu na inne podejście
+     * do obszaru puszczania i naciskania przyisku myszy - w przypadku puszczania
+     * obszar pocisku porusza się wraz z myszą i tam powinien zostać sprawdzony.
+     */
     static class MouseEventsGame
-    {   // klasa przechowująca metody związane z położeniem kursora w grze
-        // obszary zostały rozdzielone na osobne metody ze względu na inne podejście
-        // do obszaru puszczania i naciskania przyisku myszy - w przypadku puszczania
-        // obszar pocisku porusza się wraz z myszą i tam powinien zostać sprawdzony
+    {
+
+        /**
+         * metoda sprawdzania obszarów, które powinny reagować na puszczanie przycisku myszy
+         * @param level daje dostęp do pól aktualnego poziomu
+         * @param stage daje dostęp do pól aktualnego etapu
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public static Level.Area CheckAreaUp(Level level, Stage stage, Loop loop)
-        {   // sprawdzanie obszarów, które powinny reagować na puszczanie przycisku myszy
+        {   
             if (level.activity == Level.Action.result)
                 if (Mouse.GetPosition(loop.Window).Y >= stage.GetLeftButtonCoords().Y && Mouse.GetPosition(loop.Window).Y <= stage.GetLeftButtonCoords().Y+C.RESULT_BTN_HEIGHT)
                 {   // przyciski powrotu do menu i ponownej próby
@@ -37,8 +47,13 @@ namespace Projectile
                 return Level.Area.none;
         }
 
+        /**
+         * metoda sprawdzania obszarów, które powinny reagować na puszczanie przycisku myszy
+         * @param stage daje dostęp do pól aktualnego etapu
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public static Level.Area CheckAreaDown(Stage stage, Loop loop)
-        {   // sprawdzanie obszarów, które powinny reagować na puszczanie przycisku myszy
+        {   
             // obszar pocisku w miejscu domyślnym (program dopuszcza różne położenia procy, stąd użycie metod)
             if (Math.Pow(Mouse.GetPosition(loop.Window).X - stage.GetSlingshotCoords().X, 2) +
                 Math.Pow(Mouse.GetPosition(loop.Window).Y - stage.GetSlingshotCoords().Y, 2) <= (float)Math.Pow(C.PROJECTILE_RAD, 2))
@@ -47,8 +62,13 @@ namespace Projectile
                 return Level.Area.none;
         }
 
+        /**
+         * metoda sprawdzania obszarów, które mają reagować na obecność kursora w ich obszarze
+         * @param stage daje dostęp do pól aktualnego etapu
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public static Level.Area CheckArea(Loop loop, Stage stage)
-        {   // sprawdzanie obszarów, które mają reagować na obecność kursora w ich obszarze
+        {   
             // przycisk teorii (równanie elipsy)
             if (Math.Pow(Mouse.GetPosition(loop.Window).X - (float)C.LEFT_THEORY_BTN_MARGIN, 2) / Math.Pow((float)C.THEORY_X_RAD, 2) +
                      Math.Pow(Mouse.GetPosition(loop.Window).Y - (float)C.TOP_THEORY_BTN_MARGIN, 2) / Math.Pow((float)C.THEORY_Y_RAD, 2) <= 1)
@@ -63,8 +83,12 @@ namespace Projectile
                 return Level.Area.none;
         }
 
+        /**
+         * przeciążenie metody sprawdzającej obecność kursora w obszarze przycisku teorii
+         * @param loop przekazanie pętli programu pozwala odwoływać sie do RenderWindow
+         */
         public static Level.Area CheckArea(Loop loop)
-        {   // przeciążenie metody sprawdzającej obecność kursora w obszarze przycisku teorii
+        {   
             if (Math.Pow(Mouse.GetPosition(loop.Window).X - (float)C.LEFT_THEORY_BTN_MARGIN, 2) / Math.Pow((float)C.THEORY_X_RAD, 2) +
                      Math.Pow(Mouse.GetPosition(loop.Window).Y - (float)C.TOP_THEORY_BTN_MARGIN, 2) / Math.Pow((float)C.THEORY_Y_RAD, 2) <= 1)
                 return Level.Area.theory;

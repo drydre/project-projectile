@@ -1,0 +1,28 @@
+var class_projectile_1_1_miniature =
+[
+    [ "Miniature", "class_projectile_1_1_miniature.html#ad45fd53d48870a22a8296a6ff85aba4c", null ],
+    [ "Miniature", "class_projectile_1_1_miniature.html#a2ab95cd9e272bdb6ca029bddba289056", null ],
+    [ "ChangeColor", "class_projectile_1_1_miniature.html#a73bfca38296365d1984b6dcfbe035b59", null ],
+    [ "Draw", "class_projectile_1_1_miniature.html#a33ee0df6672fa5273bc2382d7bb0b077", null ],
+    [ "IsRect", "class_projectile_1_1_miniature.html#ad545a0c903d46c51b9403c0ba66d1f29", null ],
+    [ "LoadBorder", "class_projectile_1_1_miniature.html#af48b9927f66ea710b8a27131cc677df0", null ],
+    [ "LoadCpltText", "class_projectile_1_1_miniature.html#a8fb16f5e78073961d8a98f3ae89f285d", null ],
+    [ "LoadSprite", "class_projectile_1_1_miniature.html#aba7a28c6875fd1f9c61702bc5f2a3e1b", null ],
+    [ "LoadText", "class_projectile_1_1_miniature.html#a827cd71cd1761f7c1317f5621bae8215", null ],
+    [ "LoadTexture", "class_projectile_1_1_miniature.html#a5d8a4e316c6b14737ad2a858e34f7bb7", null ],
+    [ "active", "class_projectile_1_1_miniature.html#a1319bee255abd78031368193a3b6b324", null ],
+    [ "brdColor", "class_projectile_1_1_miniature.html#acb5bdb1a8f28d4015d77caf15c7ae237", null ],
+    [ "brdThickness", "class_projectile_1_1_miniature.html#a2d8a96a33d5be7fcbe8871ec27a65505", null ],
+    [ "completed", "class_projectile_1_1_miniature.html#aeef30051c115764d7f9f4fb497574228", null ],
+    [ "cpltText", "class_projectile_1_1_miniature.html#a13677cbce79faaacb4edd7b092441f88", null ],
+    [ "ellipse", "class_projectile_1_1_miniature.html#a67ccf496c0055ddeeda216531f580ef1", null ],
+    [ "fontColor", "class_projectile_1_1_miniature.html#aa103aad6750b9192811efd98a521ea8b", null ],
+    [ "name", "class_projectile_1_1_miniature.html#a9bf537e2e4ebe416f49b22808997d931", null ],
+    [ "path", "class_projectile_1_1_miniature.html#a739b79140cd0249417681cec65161b50", null ],
+    [ "rectShp", "class_projectile_1_1_miniature.html#a6fe92327161d0afc02a74e0115ddb2ee", null ],
+    [ "sprite", "class_projectile_1_1_miniature.html#a34cde6774b12d783fd8b8afd706458eb", null ],
+    [ "text", "class_projectile_1_1_miniature.html#aa349e085566e1c1aa45bfc5f51cb7705", null ],
+    [ "texture", "class_projectile_1_1_miniature.html#a5f31c8dcf0681d03678cb9ea8af40cd8", null ],
+    [ "x", "class_projectile_1_1_miniature.html#a3656ba9be57634c214552f121480d4c8", null ],
+    [ "y", "class_projectile_1_1_miniature.html#a6f252e9d154d2de44526602469a17dbe", null ]
+];

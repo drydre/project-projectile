@@ -1,9 +1,12 @@
 ﻿namespace Projectile
 {
+    /**
+     * Klasa przechowująca stałe używane w programie
+     * umieszczone tu dla wygodnego manipulowania danymi
+     * bez przeszukiwania projektu.
+     */
     static class C
-    {   // klasa przechowująca stałe używane w programie
-        // umieszczone tu dla wygodnego manipulowania danymi
-        // bez przeszukiwania projektu
+    {   
 
         // STAŁE DOTYCZĄCE CAŁEGO PROGRAMU
         public const int FPS = 60;

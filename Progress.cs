@@ -7,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace Projectile
 {
+    /** Klasa przechowująca metody zapisu, odczytu i resetu postępu.*/
     class Progress
-    {   // klasa przechowująca metody zapisu, odczytu i resetu postępu
+    {   
 
+        /** 
+         * metoda zapisu do pliku binarnego
+         * @param level numer ukończonego poziomu
+         */
         public static void SaveProgress(Int16 level)
         {
-            //metoda zapisu do pliku binarnego
+            
             using (BinaryWriter progress = new BinaryWriter(File.Open(C.SAVE_PATH, FileMode.OpenOrCreate)))
             {
                 if (DisplayMenu.miniatures[level - 1].completed == false) 
@@ -24,9 +29,12 @@ namespace Projectile
             LoadProgress();
         }
 
+        /**
+         * metoda resetowania pliku binarnego
+         * @param miniatures lista miniatur do usunięcia statusu ukończenia
+         */
         public static void ResetProgress(ref List<Miniature> miniatures)
         {
-            //metoda resetowania pliku binarnego
             foreach(Miniature min in miniatures)
             {
                 if (min.IsRect())
@@ -35,9 +43,9 @@ namespace Projectile
             BinaryWriter progress = new BinaryWriter(File.Open(C.SAVE_PATH, FileMode.Create));
         }
 
+        /** metoda wczytywania postępu po włączeniu rozgrywki*/
         public static void LoadProgress()
         {
-            //metoda wczytywania postępu po włączeniu rozgrywki
             if (File.Exists(C.SAVE_PATH))
             {
                 using (BinaryReader progress = new BinaryReader(File.Open(C.SAVE_PATH, FileMode.Open)))

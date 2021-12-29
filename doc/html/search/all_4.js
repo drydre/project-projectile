@@ -1,4 +1,24 @@
 var searchData=
 [
-  ['miniature_0',['Miniature',['../class_projectile_1_1_miniature.html',1,'Projectile']]]
+  ['def_5fbrd_5fthickness_0',['DEF_BRD_THICKNESS',['../class_projectile_1_1_c.html#a4510f71f44a6355568fe596cad551faa',1,'Projectile::C']]],
+  ['default_5fheight_1',['DEFAULT_HEIGHT',['../class_projectile_1_1_c.html#a936c25ce88a283389ec4ef513d4520d8',1,'Projectile::C']]],
+  ['default_5ftitle_2',['DEFAULT_TITLE',['../class_projectile_1_1_c.html#a227d31cb7c7bdb1bcff25da946c52a7d',1,'Projectile::C']]],
+  ['default_5fwidth_3',['DEFAULT_WIDTH',['../class_projectile_1_1_c.html#a7c001210af51feeedd6a266056a7b8f7',1,'Projectile::C']]],
+  ['defbrdclr_4',['defBrdClr',['../class_projectile_1_1_display_menu.html#ac40a8684b2806ce4cc844ea437bb4def',1,'Projectile::DisplayMenu']]],
+  ['deftxtclr_5',['defTxtClr',['../class_projectile_1_1_display_menu.html#ad2e9ac44ef2545f110e5a765a169a232',1,'Projectile::DisplayMenu']]],
+  ['delta_6',['Delta',['../class_projectile_1_1_frames.html#a784fcc94f8b5fd75e73c51d6f34c511e',1,'Projectile::Frames']]],
+  ['deltaunscaled_7',['DeltaUnscaled',['../class_projectile_1_1_frames.html#a6a40d3477ed5d26eaaec4b8d509921e2',1,'Projectile::Frames']]],
+  ['displayinfo_8',['DisplayInfo',['../class_projectile_1_1_display_info.html',1,'Projectile']]],
+  ['displayinfo_2ecs_9',['DisplayInfo.cs',['../_display_info_8cs.html',1,'']]],
+  ['displaying_10',['displaying',['../class_projectile_1_1_loop.html#affe7be2c5219942ff55760d66607590a',1,'Projectile::Loop']]],
+  ['displaylevel_11',['DisplayLevel',['../class_projectile_1_1_display_level.html',1,'Projectile']]],
+  ['displaylevel_2ecs_12',['DisplayLevel.cs',['../_display_level_8cs.html',1,'']]],
+  ['displaymenu_13',['DisplayMenu',['../class_projectile_1_1_display_menu.html',1,'Projectile']]],
+  ['displaymenu_2ecs_14',['DisplayMenu.cs',['../_display_menu_8cs.html',1,'']]],
+  ['displaytheory_15',['displayTheory',['../class_projectile_1_1_level.html#affadaf655c48615f5d9ded12e0c0ff19',1,'Projectile::Level']]],
+  ['distance_5fscale_16',['DISTANCE_SCALE',['../class_projectile_1_1_c.html#a62088b1e95a906544ba5d8a6eba5124f',1,'Projectile::C']]],
+  ['draw_17',['Draw',['../class_projectile_1_1_level.html#aee2eece254c36334c6adfa883248de0c',1,'Projectile.Level.Draw()'],['../class_projectile_1_1_loop.html#ae79702bb21d00376e4125ad19292e3f6',1,'Projectile.Loop.Draw()'],['../class_projectile_1_1_miniature.html#a33ee0df6672fa5273bc2382d7bb0b077',1,'Projectile.Miniature.Draw()'],['../class_projectile_1_1_projectile.html#afd94ea4a81598f9b902ed49d72aeb12d',1,'Projectile.Projectile.Draw()'],['../class_projectile_1_1_stage.html#ab894e76c0034d8c1a7b24f982e1edbc2',1,'Projectile.Stage.Draw()']]],
+  ['drawellipse_18',['DrawEllipse',['../class_projectile_1_1_ellipse.html#ac6972e21d80b7e9c38d11af01e7eff0f',1,'Projectile::Ellipse']]],
+  ['drawinfo_19',['DrawInfo',['../class_projectile_1_1_display_info.html#ae45905f4d5878f069770f6faa9785708',1,'Projectile::DisplayInfo']]],
+  ['drawmenu_20',['DrawMenu',['../class_projectile_1_1_display_menu.html#af24f3a1d1cfd6770c21192979bb55088',1,'Projectile::DisplayMenu']]]
 ];
